@@ -1,36 +1,3 @@
-<!--
-<!DOCTYPE html>
-<html>
-<head>
-<meta charset="utf-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
-<title>Examples</title>
-<meta name="description" content="">
-<meta name="keywords" content="">
-<link href="" rel="stylesheet">
-<link href="assets/css/bootstrap.css" rel="stylesheet">
-<script data-main="js/app" src="js/require.js"></script> 
-</head>
-<body>
-    <h1>Hi</h1>
-    <form action="/login" method="post">
-    <div>
-        <label>Username:</label>
-        <input type="text" name="username"/>
-    </div>
-    <div>
-        <label>Password:</label>
-        <input type="password" name="password"/>
-    </div>
-    <div>
-        <input type="submit" value="Log In"/>
-    </div>
-</form>
-</body>
-</html>
-
--->
-
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -56,6 +23,12 @@
       <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
     <script data-main="js/app" src="js/require.js"></script>
+    <style type="text/css">
+      body {
+        padding-top: 50px;
+        padding-bottom: 20px;
+      }
+    </style>
   </head>
 
   <body>
@@ -71,19 +44,13 @@
           </button>
           <a class="navbar-brand" href="#">Project name</a>
         </div>
-        <div class="navbar-collapse collapse">
-          <form class="navbar-form navbar-right" role="form">
-            <div class="form-group">
-              <input type="text" placeholder="User ID" class="form-control">
-            </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control">
-            </div>
-            <button type="submit" class="btn btn-success">Sign in</button>
-          </form>
+        <div id="login" class="navbar-collapse collapse">
+          
         </div><!--/.navbar-collapse -->
       </div>
     </div>
+
+    <div id="display-success" class="alert alert-success">Well done!</div>
 
     <!-- Main jumbotron for a primary marketing message or call to action -->
     <div class="jumbotron">

@@ -1,8 +1,9 @@
 define([
 	'jquery',
 	'underscore',
-	'backbone'
-], function($, _, Backbone){
+	'backbone',
+	'view/login'
+], function($, _, Backbone, LoginView){
 	return Backbone.Router.extend({
 		initialize: function(){
 			console.log('router');
@@ -14,7 +15,7 @@ define([
 			'success': 'success'
 		},
 		welcome: function(){
-			console.log('welcome');
+			new LoginView().render();
 		},
 		help: function(){
 
