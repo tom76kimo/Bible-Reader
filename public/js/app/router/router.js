@@ -7,7 +7,7 @@ define([
 ], function($, _, Backbone, MainView, LoginView){
 	return Backbone.Router.extend({
 		initialize: function(){
-			console.log('router');
+			
 		},
 		routes: {
 			'': 'welcome',
