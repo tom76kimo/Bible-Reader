@@ -2,8 +2,9 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
-	'view/login'
-], function($, _, Backbone, LoginView){
+	'view/login',
+	'view/mainMessage'
+], function($, _, Backbone, LoginView, MainMessage){
 	return Backbone.Router.extend({
 		initialize: function(){
 			console.log('router');
