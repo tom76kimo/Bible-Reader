@@ -6,7 +6,6 @@ var LocalStrategy = require('passport-local').Strategy;
 passport.use(new LocalStrategy(
 	function(username, password, done){
 		if('Tom' === username && '123456' === password){
-			console.log(username + ', ' + password);
 			return done(null, {name: 'Tom'});
 		}
 		else
