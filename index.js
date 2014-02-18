@@ -93,7 +93,7 @@ app.post('/login', function(req, res, next){
 	    }
 	    req.logIn(user, function(err) {
 	      if (err) { return next(err); }
-	      return res.json({status: 1});
+	      return res.json({status: 1, user: user});
 	    });
 	  })(req, res, next);
 });

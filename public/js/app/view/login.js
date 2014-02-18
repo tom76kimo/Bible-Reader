@@ -27,7 +27,7 @@ define([
 			var self = this;
 			$.post('/login', {username: userId, password: password}, function(data){
 				if(data.status === 1){
-					self.mainMessage.success().render('登入成功!!!');
+					self.mainMessage.success().render('<strong>Hello!! ' + data.user.nickname + '</strong>，您已經登入成功!!!');
 				}
 				else{
 					self.mainMessage.danger().render('<strong>注意!</strong>登入失敗，請檢查帳號密碼是否正確。');
