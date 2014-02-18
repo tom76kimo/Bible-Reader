@@ -98,7 +98,7 @@ app.post('/login', function(req, res, next){
 	  })(req, res, next);
 });
 
-app.post('/signin', function(req, res, next){
+app.post('/signUp', function(req, res, next){
 	var username = req.body.username,
 		password = req.body.password;
 
@@ -113,6 +113,11 @@ app.post('/signin', function(req, res, next){
 			res.send({status: 0, message: 'user has existed'});
 		}
 	});
+});
+
+app.post('/logout', function(req, res){
+  req.logOut();
+  res.redirect("/");
 });
 
 app.get('/fail', function(req, res){

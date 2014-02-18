@@ -4,22 +4,22 @@ define([
 	'backbone',
 	'view/main',
 	'view/login',
-	'view/signin'
-], function($, _, Backbone, MainView, LoginView, SigninView){
+	'view/signUp'
+], function($, _, Backbone, MainView, LoginView, SignUpView){
 	return Backbone.Router.extend({
 		initialize: function(){
-			
+			new LoginView().render();
 		},
 		routes: {
 			'': 'welcome',
 			'help': 'help',
 			'fail': 'fail',
-			'signin': 'signin',
+			'signUp': 'signUp',
 			'success': 'success'
 		},
 		welcome: function(){
 			new MainView().render();
-			new LoginView().render();
+			//new LoginView().render();
 		},
 		help: function(){
 
@@ -30,9 +30,9 @@ define([
 		success: function(){
 			console.log('Good Job!');
 		},
-		signin: function(){
-			new SigninView().render();
-			new LoginView().render();
+		signUp: function(){
+			new SignUpView().render();
+			//new LoginView().render();
 		}
 	});
 });
