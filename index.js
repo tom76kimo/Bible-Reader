@@ -98,6 +98,23 @@ app.post('/login', function(req, res, next){
 	  })(req, res, next);
 });
 
+app.post('/signin', function(req, res, next){
+	var username = req.body.username,
+		password = req.body.password;
+
+	User.findOne({username: username}, function(err, user){
+		if(!user){
+			var thisPerson = new User({username: username, password: password});
+			thisPerson.save(function(err){
+				res.send({status: 1, u: username});
+			});
+		}
+		else{
+			res.send({status: 0, message: 'user has existed'});
+		}
+	});
+});
+
 app.get('/fail', function(req, res){
 	res.send({message: 'fail'});
 });

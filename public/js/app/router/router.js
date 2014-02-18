@@ -3,8 +3,9 @@ define([
 	'underscore',
 	'backbone',
 	'view/main',
-	'view/login'
-], function($, _, Backbone, MainView, LoginView){
+	'view/login',
+	'view/signin'
+], function($, _, Backbone, MainView, LoginView, SigninView){
 	return Backbone.Router.extend({
 		initialize: function(){
 			
@@ -13,6 +14,7 @@ define([
 			'': 'welcome',
 			'help': 'help',
 			'fail': 'fail',
+			'signin': 'signin',
 			'success': 'success'
 		},
 		welcome: function(){
@@ -27,6 +29,10 @@ define([
 		},
 		success: function(){
 			console.log('Good Job!');
+		},
+		signin: function(){
+			new SigninView().render();
+			new LoginView().render();
 		}
 	});
 });
