@@ -30,8 +30,14 @@ define([
 				return;
 			}
 
+			var self = this;
 			$.post('/signin', {username: userId, password: password}, function(data){
-				console.log(data);
+				if(data.status === 1){
+					self.mainMessage.success().render('sigin sucess!');
+				}
+				else{
+					self.mainMessage.warning().render(data.message);
+				}
 			}, 'json');
 		}
 	});
