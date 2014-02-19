@@ -4,22 +4,31 @@ define([
 	'backbone',
 	'view/main',
 	'view/login',
-	'view/signUp'
-], function($, _, Backbone, MainView, LoginView, SignUpView){
+	'view/signUp',
+	'view/setting',
+	'model/website'
+], function($, _, Backbone, MainView, LoginView, SignUpView, SettingView, Website){
 	return Backbone.Router.extend({
 		initialize: function(){
-			new LoginView().render();
+			new LoginView();
 		},
 		routes: {
 			'': 'welcome',
 			'help': 'help',
 			'fail': 'fail',
 			'signUp': 'signUp',
-			'success': 'success'
+			'success': 'success',
+			'setting': 'setting'
 		},
 		welcome: function(){
 			new MainView().render();
 			//new LoginView().render();
+		},
+		setting: function(){
+			if(!Website.getUser())
+				this.navigate('/', {trigger: true, replace: true});
+			else
+				new SettingView().render();
 		},
 		help: function(){
 

@@ -6,8 +6,9 @@ define([
 	'view/mainMessage',
 	'text!tpl/login.html',
 	'text!tpl/logged.html',
-	'model/user'
-], function($, _, Backbone, bootstrap, MainMessage, tpl, loggedTpl, User){
+	'model/user',
+	'model/website'
+], function($, _, Backbone, bootstrap, MainMessage, tpl, loggedTpl, User, Website){
 	return Backbone.View.extend({
 		el: $('#login'),
 		messageString: {
@@ -17,7 +18,24 @@ define([
 			LOGOUT_SUCCESS: '您已經成功登出。'
 		},
 		initialize: function(){
+			var self = this;
 			this.mainMessage = new MainMessage();
+			$.post('/logged', function(data){
+				if(data.status === 1){
+					var user = new User({_id: data.id});
+					user.fetch({
+						success: function(model, res, options){
+							self.loggedRender(model.get('nickname'));
+							Website.setUser(model);
+						},
+						error: function(){
+							self.render();
+						}
+					});
+				}
+				else
+					self.render();
+			});
 		},
 		render: function(){
 			var self = this;
@@ -64,25 +82,20 @@ define([
 			var self = this;
 			$.post('/login', {username: userId, password: password}, function(data){
 				if(data.status === 1)
-					hasLogged(data);
+					hasLogged(data.id);
 				else{
 					self.mainMessage.danger().render(self.messageString.CHECK_ID_PASSWORD_CORRECTNESS);
 				}
 			}, 'json');
 
-			function hasLogged(data){
-				var nickname;
-				if(data.user.nickname)
-					nickname = data.user.nickname;
-				else
-					nickname = data.user.username;
-				console.log(data.user);
-				self.loggedRender(nickname);
-				self.mainMessage.success().render('<strong>Hello!! ' + nickname + '</strong>' + self.messageString.LOGIN_SUCCESS);
-				var user = new User({_id: data.user._id});
+			function hasLogged(id){
+				var user = new User({_id: id});
 				user.fetch({
 					success: function(model){
-						console.log(model);
+						Website.setUser(model);
+						var nickname = model.get('nickname') || model.get('username');
+						self.loggedRender(nickname);
+						self.mainMessage.success().render('<strong>Hello!! ' + nickname + '</strong>' + self.messageString.LOGIN_SUCCESS);
 					}
 				});
 			}

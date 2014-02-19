@@ -25,6 +25,13 @@ passport.use(new LocalStrategy(
 			}
 			return done(null, user);
 		});
+		/*
+		if('Tom' === username && '123456' === password){
+			return done(null, {name: 'Tom'});
+		}
+		else
+			return done(null, false, '{}');*/
+	}
 ));
 
 var oneDay = 86400000;
@@ -41,7 +48,12 @@ app.configure(function(){
 	app.use(app.router);
 });
 
-
+app.post('/logged', function(req, res){
+	if(req.user)
+		res.send(200, {status: 1, id: req.user._id});
+	else
+		res.send(200, {status: 0});
+});
 
 
 passport.serializeUser(function(user, done) {
@@ -82,7 +94,7 @@ app.post('/login', function(req, res, next){
 	    }
 	    req.logIn(user, function(err) {
 	      if (err) { return next(err); }
-	      return res.json({status: 1, user: user});
+	      return res.json({status: 1, id: user._id});
 	    });
 	  })(req, res, next);
 });
