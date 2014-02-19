@@ -2,10 +2,12 @@ define([
 	'backbone'
 ], function(Backbone){
 	return Backbone.Model.extend({
+		idAttribute: "_id",
+		urlRoot: '/users',
 		defaults: {
-			userId: undefined,
+			username: undefined,
 			password: undefined,
-			name: 'no name',
+			nickname: 'no name',
 			data: {}
 		}
 	});

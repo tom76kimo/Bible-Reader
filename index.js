@@ -2,14 +2,7 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var mongoose = require('mongoose');
-mongoose.connect('mongodb://localhost/bible');
-var db = mongoose.connection;
-
-db.on('error', console.error.bind(console, 'connection error:'));
-var userSchema = new mongoose.Schema({username: 'string', password: 'string'});
-var User = mongoose.model('Users', userSchema);
-//var Tom = new User({username: 'Tomm', password: '456'});
+var User = require('./database').User;
 
 
 function validPassword(user, password){
@@ -32,13 +25,6 @@ passport.use(new LocalStrategy(
 			}
 			return done(null, user);
 		});
-		/*
-		if('Tom' === username && '123456' === password){
-			return done(null, {name: 'Tom'});
-		}
-		else
-			return done(null, false, '{}');*/
-	}
 ));
 
 var oneDay = 86400000;
@@ -60,12 +46,15 @@ app.configure(function(){
 
 passport.serializeUser(function(user, done) {
 	console.log(user);
-    done(null, user);
+    done(null, user.id);
 });
 
-passport.deserializeUser(function(user, done) {
+passport.deserializeUser(function(id, done) {
 	console.log('deSerial?');
-    done(null, user);
+	User.findById(id, function(err, user){
+		done(err, user);
+	});
+    //done(null, user);
 });
 
 
@@ -129,7 +118,7 @@ app.post('/users', function(req, res){
 });
 
 app.get('/users/:userId', loadUser, function(req, res){
-	res.send({name: name});
+	res.send(req.user);
 });
 
 app.put('/users/:userId', loadUser, function(req, res){
