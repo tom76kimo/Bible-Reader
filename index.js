@@ -3,7 +3,21 @@ var app = express();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
 var User = require('./database').User;
+var Book = require('./database').Book;
+var crypto = require('crypto');
 
+/*
+new Book({name: 'Leviticus', cname: '利未記', shortName: 'Lev', amount: 27}).save();
+new Book({name: 'Numbers', cname: '民數記', shortName: 'Num', amount: 36}).save();
+new Book({name: 'Deuteronomy', cname: '申命記', shortName: 'Deu', amount: 34}).save();
+new Book({name: 'Joshua', cname: '約書亞記', shortName: 'Jos', amount: 24}).save();
+new Book({name: 'Judges', cname: '士師記', shortName: 'Jug', amount: 21}).save();
+new Book({name: 'Ruth', cname: '路得記', shortName: 'Rut', amount: 4}).save();
+new Book({name: '1 Samuel', cname: '撒母耳記上', shortName: '1Sa', amount: 31}).save();
+new Book({name: '2 Samuel', cname: '撒母耳記下', shortName: '2Sa', amount: 24}).save();
+new Book({name: '1Kings', cname: '列王紀上', shortName: '1Ki', amount: 22}).save();
+new Book({name: '2Kings', cname: '列王紀下', shortName: '2Ki', amount: 25}).save();
+*/
 
 function validPassword(user, password){
 	if(user.password !== password)
@@ -19,7 +33,9 @@ passport.use(new LocalStrategy(
 				console.log('no user');
 				return done(null, false, { message: 'Incorrect username' });
 			}
-			if(!validPassword(password)){
+
+			var encodePassword = crypto.createHash('md5').update(password).digest('hex');
+			if(!validPassword(encodePassword)){
 				console.log('no pass');
 				return done(null, false, { message: 'Incorrect password'});
 			}
@@ -48,12 +64,6 @@ app.configure(function(){
 	app.use(app.router);
 });
 
-app.post('/logged', function(req, res){
-	if(req.user)
-		res.send(200, {status: 1, id: req.user._id});
-	else
-		res.send(200, {status: 0});
-});
 
 
 passport.serializeUser(function(user, done) {
@@ -84,6 +94,14 @@ function checkAdmin(req, res, next){
 	next();
 }
 
+app.post('/logged', function(req, res){
+	if(req.user)
+		res.send(200, {status: 1, id: req.user._id});
+	else
+		res.send(200, {status: 0});
+});
+
+
 app.post('/login', function(req, res, next){
 
 	passport.authenticate('local', function(err, user, info) {
@@ -105,7 +123,8 @@ app.post('/signUp', function(req, res, next){
 
 	User.findOne({username: username}, function(err, user){
 		if(!user){
-			var thisPerson = new User({username: username, password: password});
+			var encodePassword = crypto.createHash('md5').update(password).digest('hex');
+			var thisPerson = new User({username: username, password: encodePassword});
 			thisPerson.save(function(err){
 				res.send({status: 1, u: username});
 			});

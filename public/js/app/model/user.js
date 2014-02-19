@@ -7,7 +7,7 @@ define([
 		defaults: {
 			username: undefined,
 			password: undefined,
-			nickname: 'no name',
+			nickname: undefined,
 			data: {}
 		}
 	});

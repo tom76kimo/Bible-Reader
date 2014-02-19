@@ -10,6 +10,9 @@ define([
 				return this.user;
 			else
 				return null;
+		},
+		clearUser: function(){
+			this.user = null;
 		}
 	});
 	return new website();

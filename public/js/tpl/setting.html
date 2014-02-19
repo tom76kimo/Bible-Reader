@@ -1,3 +1,4 @@
+<% var user = JSON.parse(user); %>
 <div class="jumbotron"  style="width: 764px; margin-left: auto; margin-right: auto;">
   <div class="container" style="width: 100%;">
     <h1>Hello, world!</h1>
@@ -5,8 +6,8 @@
 	<img src="/assets/images/man.png" alt="" class="img-thumbnail" width="140" height="140" style="float: left;">
 	
 	<address style="float: left; margin-left: 30px; width: 500px;">
-		<strong>Tomm</strong><br>
-		阿憲<br>
+		<strong><%=user.username%></strong><br>
+		<%=user.nickname%><br>
 		Description Here.
 	</address>
 	<div class="progress" style="width: 100%">

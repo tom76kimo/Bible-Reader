@@ -25,7 +25,7 @@ define([
 					var user = new User({_id: data.id});
 					user.fetch({
 						success: function(model, res, options){
-							self.loggedRender(model.get('nickname'));
+							self.loggedRender(model.get('nickname') || model.get('username'));
 							Website.setUser(model);
 						},
 						error: function(){
@@ -58,6 +58,8 @@ define([
 			this.fadeOut(changeContent);
 			function changeContent(){
 				self.$el.html(_.template(loggedTpl, {nickname: nickname}));
+				self.$('button').tooltip();
+				self.$('a').tooltip();
 				self.fadeIn();
 			};
 		},
@@ -104,6 +106,7 @@ define([
 		logout: function(){
 			var self = this;
 			$.post('/logout', {}, function(){
+				Website.clearUser();
 				self.loggoutRender();
 				self.mainMessage.warning().render(self.messageString.LOGOUT_SUCCESS);
 			});
