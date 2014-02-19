@@ -5,6 +5,7 @@ requirejs.config({
 	  model: '../app/model',
 	  view: '../app/view',
 	  router: '../app/router',
+	  collection: '../app/collection',
 	  tpl: '../tpl'
 	},
 	shim: {

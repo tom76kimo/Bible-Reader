@@ -6,8 +6,9 @@ define([
 	'view/login',
 	'view/signUp',
 	'view/setting',
+	'view/read',
 	'model/website'
-], function($, _, Backbone, MainView, LoginView, SignUpView, SettingView, Website){
+], function($, _, Backbone, MainView, LoginView, SignUpView, SettingView, ReadView, Website){
 	return Backbone.Router.extend({
 		initialize: function(){
 			new LoginView();
@@ -18,7 +19,8 @@ define([
 			'fail': 'fail',
 			'signUp': 'signUp',
 			'success': 'success',
-			'setting': 'setting'
+			'setting': 'setting',
+			'read': 'read'
 		},
 		welcome: function(){
 			new MainView().render();
@@ -42,6 +44,9 @@ define([
 		signUp: function(){
 			new SignUpView().render();
 			//new LoginView().render();
+		},
+		read: function(){
+			new ReadView().render();
 		}
 	});
 });

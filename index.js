@@ -7,16 +7,16 @@ var Book = require('./database').Book;
 var crypto = require('crypto');
 
 /*
-new Book({name: 'Leviticus', cname: '利未記', shortName: 'Lev', amount: 27}).save();
-new Book({name: 'Numbers', cname: '民數記', shortName: 'Num', amount: 36}).save();
-new Book({name: 'Deuteronomy', cname: '申命記', shortName: 'Deu', amount: 34}).save();
-new Book({name: 'Joshua', cname: '約書亞記', shortName: 'Jos', amount: 24}).save();
-new Book({name: 'Judges', cname: '士師記', shortName: 'Jug', amount: 21}).save();
-new Book({name: 'Ruth', cname: '路得記', shortName: 'Rut', amount: 4}).save();
-new Book({name: '1 Samuel', cname: '撒母耳記上', shortName: '1Sa', amount: 31}).save();
-new Book({name: '2 Samuel', cname: '撒母耳記下', shortName: '2Sa', amount: 24}).save();
-new Book({name: '1Kings', cname: '列王紀上', shortName: '1Ki', amount: 22}).save();
-new Book({name: '2Kings', cname: '列王紀下', shortName: '2Ki', amount: 25}).save();
+new Book({name: '1 Chronicles', cname: '歷代志上', shortName: '1Ch', amount: 29}).save();
+new Book({name: '2 Chronicles', cname: '歷代志下', shortName: '2Ch', amount: 36}).save();
+new Book({name: 'Ezra', cname: '以斯拉記', shortName: 'Ezr', amount: 10}).save();
+new Book({name: 'Nehemiah', cname: '尼希米記', shortName: 'Neh', amount: 13}).save();
+new Book({name: 'Esther', cname: '以斯帖記', shortName: 'Est', amount: 10}).save();
+new Book({name: 'Job', cname: '約伯記', shortName: 'Job', amount: 42}).save();
+new Book({name: 'Psalms', cname: '詩篇', shortName: 'Psm', amount: 150}).save();
+new Book({name: 'Proverbs', cname: '箴言', shortName: 'Pro', amount: 31}).save();
+new Book({name: 'Ecclesiastes', cname: '傳道書', shortName: 'Ecc', amount: 12}).save();
+new Book({name: 'Song of Songs', cname: '雅歌', shortName: 'Son', amount: 8}).save();
 */
 
 function validPassword(user, password){
@@ -127,12 +127,20 @@ app.post('/signUp', function(req, res, next){
 			var thisPerson = new User({username: username, password: encodePassword});
 			thisPerson.save(function(err){
 				res.send({status: 1, u: username});
+				console.log('save once');
 			});
 		}
 		else{
 			res.send({status: 0, message: 'user has existed'});
 		}
 	});
+});
+
+app.get('/books', function(req, res){
+	Book.find({}, function(err, book){
+    	res.send(book);
+	});
+	
 });
 
 app.post('/logout', function(req, res){
