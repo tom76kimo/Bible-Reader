@@ -20,8 +20,10 @@ define([
 		initialize: function(){
 			var self = this;
 			this.mainMessage = new MainMessage();
+			/*
 			$.ajax({
 				type: 'POST',
+				dataType: 'json',
 				async: false,
 				url: '/logged',
 				success: function(data){
@@ -31,6 +33,7 @@ define([
 							success: function(model, res, options){
 								self.loggedRender(model.get('nickname') || model.get('username'));
 								Website.setUser(model);
+								console.log(Website.getUser());
 							},
 							error: function(){
 								self.render();
@@ -40,8 +43,8 @@ define([
 					else
 						self.render();
 				}
-			});
-			/*
+			});*/
+			
 			$.post('/logged', function(data){
 				if(data.status === 1){
 					var user = new User({_id: data.id});
@@ -57,7 +60,7 @@ define([
 				}
 				else
 					self.render();
-			});*/
+			});
 		},
 		render: function(){
 			var self = this;
@@ -131,6 +134,7 @@ define([
 				Website.clearUser();
 				self.loggoutRender();
 				self.mainMessage.warning().render(self.messageString.LOGOUT_SUCCESS);
+				Website.navigate('/', {trigger: true, replace: true});
 			});
 		}
 	});

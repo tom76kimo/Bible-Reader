@@ -117,6 +117,11 @@ app.get('/hasreads', function(req, res){
 	
 });
 
+app.all('*', function(req, res, next){
+	console.log('hey');
+	next();
+});
+
 app.post('/hasread', function(req, res){
 	var hasRead = new HasRead(req.body);
 	hasRead.save(function(err, model){
