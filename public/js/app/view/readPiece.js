@@ -47,7 +47,8 @@ define([
 			}
 		},
 		check: function(number){
-			var readChapter = this.hasRead.get('readChapter');
+			var readChapter = this.hasRead.get('readChapter'),
+			    readAmount = this.hasRead.get('amount');
 			var readChapterArray = readChapter.split(',');
 			readChapterArray.push(number);
 			readChapterArray = _.compact(readChapterArray);
@@ -55,7 +56,7 @@ define([
 			readChapterArray = _.uniq(readChapterArray, true);
 			console.log(readChapterArray);
 			readChapter = readChapterArray.join(',');
-			this.hasRead.set({readChapter: readChapter});
+			this.hasRead.set({readChapter: readChapter, amount: (readAmount+1)});
 			this.hasRead.save({
 				error: function(){
 					//make the number unchecked.
@@ -63,14 +64,15 @@ define([
 			});
 		},
 		uncheck: function(number){
-			var readChapter = this.hasRead.get('readChapter');
+			var readChapter = this.hasRead.get('readChapter'),
+			    readAmount = this.hasRead.get('amount');
 			var readChapterArray = readChapter.split(',');
 			var index = readChapterArray.indexOf(number);
 			if(index > -1)
 				readChapterArray.splice(index, 1);
 			readChapter = readChapterArray.join(',');
 			console.log(readChapterArray);
-			this.hasRead.set({readChapter: readChapter});
+			this.hasRead.set({readChapter: readChapter, amount: (readAmount-1)});
 			this.hasRead.save({
 				error: function(){
 					//make the number unchecked.

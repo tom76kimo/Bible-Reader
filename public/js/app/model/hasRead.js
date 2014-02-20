@@ -7,7 +7,9 @@ define([
 		defaults: {
 			userId: undefined,
 			bookId: undefined,
-			readChapter: undefined
+			readChapter: undefined,
+			amount: undefined,
+			totalAmount: undefined
 		}
 	});
 });

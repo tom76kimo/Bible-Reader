@@ -41,7 +41,7 @@ define([
 					}
 					else{
 						var userId = Website.getUser().get('_id');
-						hasRead = new HasRead({userId: userId, bookId: book.get('_id'), readChapter: ''});
+						hasRead = new HasRead({userId: userId, bookId: book.get('_id'), readChapter: '', amount: 0, totalAmount: book.get('amount')});
 						
 					}
 					new ReadPieceView({el: div, model: book, hasRead: hasRead}).render();

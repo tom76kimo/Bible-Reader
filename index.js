@@ -130,7 +130,14 @@ app.post('/hasread', function(req, res){
 });
 
 app.put('/hasread', function(req, res){
-	HasRead.update({_id: req.body._id}, {userId: req.body.userId, bookId: req.body.bookId, readChapter: req.body.readChapter}, function(err, numberAffected, raw){
+	var data = {
+		userId: req.body.userId, 
+		bookId: req.body.bookId, 
+		readChapter: req.body.readChapter,
+		amount: req.body.amount,
+		totalAmount: req.body.totalAmount
+	};
+	HasRead.update({_id: req.body._id}, data, function(err, numberAffected, raw){
 		if(err)
 			console.log(err);
 		res.send(200);
