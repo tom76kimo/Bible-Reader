@@ -14,7 +14,8 @@ define([
 			this.$el.html(this.template({}));
 		},
 		events: {
-			'click #fireSignin': 'signUp'
+			'click #fireSignin': 'signUp',
+			'change input': 'changeInput'
 		},
 		signUp: function(){
 			var userId = this.$('#formUserid').val(),
@@ -25,7 +26,13 @@ define([
 				return;				
 			}
 
-
+			if(userId.length < 4 || password.length < 4){
+				this.mainMessage.warning().render('User ID are too short.');
+				//this.$('#formUserid').parent('div').addClass('has-warning has-feedback');
+				//this.$('#formUserid').siblings('span').show();
+				return;	
+			}
+			
 			if(password !== rePassowrd){
 				this.mainMessage.warning().render('password and re-password don\'t match');
 				return;
@@ -41,6 +48,18 @@ define([
 					self.mainMessage.warning().render(data.message);
 				}
 			}, 'json');
+		},
+		changeInput: function(e){
+			if($(e.target).val().length < 4){
+				$(e.target).parent('div').addClass('has-warning has-feedback');
+				$(e.target).siblings('span').show();
+				$(e.target).siblings('.localMessage').html('Too short.');
+			}
+			else{
+				$(e.target).parent('div').removeClass('has-warning has-feedback');
+				$(e.target).siblings('span').hide();
+			}
+
 		}
 	});
 });
