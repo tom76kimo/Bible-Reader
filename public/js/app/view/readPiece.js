@@ -54,7 +54,7 @@ define([
 			readChapterArray = _.compact(readChapterArray);
 			readChapterArray = _.sortBy(readChapterArray, function(num){ return Math.sin(parseInt(num)); });
 			readChapterArray = _.uniq(readChapterArray, true);
-			console.log(readChapterArray);
+			//console.log(readChapterArray);
 			readChapter = readChapterArray.join(',');
 			this.hasRead.set({readChapter: readChapter, amount: (readAmount+1)});
 			this.hasRead.save({
