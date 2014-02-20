@@ -20,6 +20,28 @@ define([
 		initialize: function(){
 			var self = this;
 			this.mainMessage = new MainMessage();
+			$.ajax({
+				type: 'POST',
+				async: false,
+				url: '/logged',
+				success: function(data){
+					if(data.status === 1){
+						var user = new User({_id: data.id});
+						user.fetch({
+							success: function(model, res, options){
+								self.loggedRender(model.get('nickname') || model.get('username'));
+								Website.setUser(model);
+							},
+							error: function(){
+								self.render();
+							}
+						});
+					}
+					else
+						self.render();
+				}
+			});
+			/*
 			$.post('/logged', function(data){
 				if(data.status === 1){
 					var user = new User({_id: data.id});
@@ -35,7 +57,7 @@ define([
 				}
 				else
 					self.render();
-			});
+			});*/
 		},
 		render: function(){
 			var self = this;

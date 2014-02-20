@@ -2,8 +2,10 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var User = require('./database').User;
-var Book = require('./database').Book;
+var database = require('./database');
+var User = database.User;
+var Book = database.Book;
+var HasRead = database.HasRead;
 var crypto = require('crypto');
 
 /*
@@ -18,6 +20,13 @@ new Book({name: 'Proverbs', cname: '箴言', shortName: 'Pro', amount: 31}).save
 new Book({name: 'Ecclesiastes', cname: '傳道書', shortName: 'Ecc', amount: 12}).save();
 new Book({name: 'Song of Songs', cname: '雅歌', shortName: 'Son', amount: 8}).save();
 */
+//new HasRead({userId: '1', bookId: '1', readChapter: '1,2'}).save();
+/*
+HasRead.findOne({userId: '1', bookId: '1'}, function(err, hasRead){
+	if(err) console.log('failed');
+	if(!hasRead)
+		console.log('document not found');
+});*/
 
 function validPassword(user, password){
 	if(user.password !== password)
@@ -67,12 +76,12 @@ app.configure(function(){
 
 
 passport.serializeUser(function(user, done) {
-	console.log(user);
+	//console.log(user);
     done(null, user.id);
 });
 
 passport.deserializeUser(function(id, done) {
-	console.log('deSerial?');
+	//console.log('deSerial?');
 	User.findById(id, function(err, user){
 		done(err, user);
 	});
@@ -101,6 +110,28 @@ app.post('/logged', function(req, res){
 		res.send(200, {status: 0});
 });
 
+app.get('/hasreads', function(req, res){
+	HasRead.find({userId: req.user._id}, function(err, hasRead){
+		res.send(200, hasRead);
+	});
+	
+});
+
+app.post('/hasread', function(req, res){
+	var hasRead = new HasRead(req.body);
+	hasRead.save(function(err, model){
+		res.send(200, model);
+	});
+});
+
+app.put('/hasread', function(req, res){
+	HasRead.update({_id: req.body._id}, {userId: req.body.userId, bookId: req.body.bookId, readChapter: req.body.readChapter}, function(err, numberAffected, raw){
+		if(err)
+			console.log(err);
+		res.send(200);
+	});
+	//res.send(200);
+});
 
 app.post('/login', function(req, res, next){
 

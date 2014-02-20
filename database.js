@@ -9,5 +9,9 @@ var User = mongoose.model('Users', userSchema);
 var bookSchema = new mongoose.Schema({name: String, cname: String, shortName: String, amount: Number});
 var Book = mongoose.model('Books', bookSchema);
 
+var hasReadSchema = new mongoose.Schema({userId: String, bookId: String, readChapter: String});
+var HasRead = mongoose.model('hasread', hasReadSchema);
+
 exports.User = User;
 exports.Book = Book;
+exports.HasRead = HasRead;
