@@ -2,9 +2,10 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'model/website',
 	'view/mainMessage',
 	'text!tpl/signUp.html'
-], function($, _, Backbone, MainMessageView, tpl){
+], function($, _, Backbone, Website, MainMessageView, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -33,7 +34,8 @@ define([
 			var self = this;
 			$.post('/signUp', {username: userId, password: password}, function(data){
 				if(data.status === 1){
-					self.mainMessage.success().render('sigin sucess!');
+					self.mainMessage.success().render('Sigin Up sucess! Please login through upper bar. <span class="glyphicon glyphicon-arrow-up"></span>');
+					//Website.navigate('#setting', {trigger: true, replace: true});
 				}
 				else{
 					self.mainMessage.warning().render(data.message);

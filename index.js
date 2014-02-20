@@ -161,9 +161,9 @@ app.post('/signUp', function(req, res, next){
 		if(!user){
 			var encodePassword = crypto.createHash('md5').update(password).digest('hex');
 			var thisPerson = new User({username: username, password: encodePassword});
-			thisPerson.save(function(err){
-				res.send({status: 1, u: username});
-				console.log('save once');
+			thisPerson.save(function(err, user){
+				res.send({status: 1, userId: user._id});
+				//console.log('save once');
 			});
 		}
 		else{
