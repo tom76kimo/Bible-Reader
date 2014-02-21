@@ -8,8 +8,8 @@ var Book = database.Book;
 var HasRead = database.HasRead;
 var crypto = require('crypto');
 
+
 /*
-new Book({name: '1 Chronicles', cname: '歷代志上', shortName: '1Ch', amount: 29}).save();
 new Book({name: '2 Chronicles', cname: '歷代志下', shortName: '2Ch', amount: 36}).save();
 new Book({name: 'Ezra', cname: '以斯拉記', shortName: 'Ezr', amount: 10}).save();
 new Book({name: 'Nehemiah', cname: '尼希米記', shortName: 'Neh', amount: 13}).save();
@@ -221,4 +221,4 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login')
 }
 
-app.listen(3000);
+app.listen(9797);
