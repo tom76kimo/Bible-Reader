@@ -1,0 +1,14 @@
+<td>#</td>
+<td><%=username%></td>
+<td>
+	<div class="progress">
+	  <div class="progress-bar" role="progressbar" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=percentage%>%;">
+	    <span class="sr-only"><%=percentage%>% Complete</span>
+	  </div>
+	</div>
+</td>
+<td>
+	<% for(var i=0; i<badges.length; ++i){ %>
+		<span class="badge"><%=badges[i]%></span>
+	<% } %>
+</td>

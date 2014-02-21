@@ -118,7 +118,6 @@ app.get('/hasreads', function(req, res){
 });
 
 app.all('*', function(req, res, next){
-	console.log('hey');
 	next();
 });
 
@@ -212,9 +211,52 @@ app.get('/users/:userId/admin', [loadUser, checkAdmin], function(req, res){
 	res.send('hello world');
 });
 
+app.get('/statistic', function(req, res){
+	User.find({}, function(err, user){
+    	res.send(user);
+	});
+});
+
+app.get('/allUser', function(req, res){
+	User.find({}, function(err, user){
+		for(var i=0; i<user.length; ++i){
+			user[i].password = null
+		}
+    	res.send(user);
+	});
+});
+
 app.get('/account', ensureAuthenticated, function(req, res){
   res.send({ user: req.user });
 });
+
+app.post('/progress', function(req, res){
+	calculates(req.body.userId, function(output){
+		res.send(200, output);
+	});
+});
+
+
+
+
+
+//calculates("5303252b0f9bcd282765f4ba", function(data){
+//	console.log(data);
+//});
+function calculates(userId, callback){
+	//console.log(userId);
+	var output = {};
+	output.badges = [];
+	output.totalReadChapter = 0;
+	HasRead.find({userId: userId}, function(err, hasReads){
+		for(var i=0; i<hasReads.length; ++i){
+			output.totalReadChapter += hasReads[i].amount;
+			if(hasReads[i].amount === hasReads[i].totalAmount)
+				output.badges.push(hasReads[i].bookId);
+		}
+		callback && callback(output);
+	});
+}
 
 function ensureAuthenticated(req, res, next) {
   if (req.isAuthenticated()) { return next(); }
