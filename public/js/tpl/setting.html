@@ -13,7 +13,7 @@
 	</address>
 	<div style="clear: both"></div>
 	
-	<div style="width: 100%;">Progress: <%=percentage%>%</div>
+	<div style="width: 100%;">Progress: <strong><%=percentage%>%</strong></div>
 	<div class="progress" style="width: 100%;">
 		<div class="progress-bar" role="progressbar" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=percentage%>%;">
 		<%=percentage%>%
@@ -21,13 +21,14 @@
 	</div>
 	
 	<div style="clear: both"></div>
+	<strong>Badges:</strong>
 	<div style="width: 100%; ">
 		<% for(var i=0; i<badges.length; ++i){ %>
 			<span class="badge"><%=badges[i]%></span>
 		<% } %>
 	</div>
-	<div style="width: 100%; margin-top: 20px;">
-		<a class="btn btn-info btn-lg" href="#read">Start Reading <span class="glyphicon glyphicon-fire"></span></a>
+	<div style="width: 20%; margin-top: 20px; margin-left: auto; margin-right: auto;">
+		<a class="btn btn-info btn-lg" href="#read" style="margin-left: auto; margin-right: auto;">Start Reading <span class="glyphicon glyphicon-fire"></span></a>
 	</div>
   </div>
 </div>
