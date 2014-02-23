@@ -34,6 +34,7 @@ define([
 					hasReadsFinished.reject();
 				}
 			});
+			/*
 			var books = new Books();
 			books.fetch({
 				success: function(){
@@ -42,6 +43,16 @@ define([
 				error: function(){
 					booksFinished.reject();
 				}
+			});
+*/
+			var books;
+			Website.getBooks(function(data){
+				if(data){
+					books = data;
+					booksFinished.resolve();
+				}
+				else
+					booksFinished.reject();
 			});
 
 			var badges = [];
