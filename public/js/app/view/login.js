@@ -44,7 +44,6 @@ define([
 						self.render();
 				}
 			});*/
-			
 			$.post('/logged', function(data){
 				if(data.status === 1){
 					var user = new User({_id: data.id});

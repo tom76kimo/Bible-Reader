@@ -30,7 +30,10 @@ define([
 			});
 
 			$.when(usersFinisher, booksFinisher).done(function(){
-				self.$el.html(self.template);
+				var showReadingButton = 0;
+				if(Website.getUser())
+					showReadingButton = 1;
+				self.$el.html(self.template({showReadingButton: showReadingButton}));
 				for(var i=0; i<self.users.length; ++i){
 					var tr = $('<tr>').appendTo('#panel');
 					new StatisticPersonView({el: tr, model: self.users.models[i], books: self.books}).render();
