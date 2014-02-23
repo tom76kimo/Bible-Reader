@@ -10,8 +10,9 @@ define([
 	'view/setting',
 	'view/read',
 	'view/statistic',
+	'view/blog-readBible',
 	'model/website'
-], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, Website){
+], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, BlogView, Website){
 	return Backbone.Router.extend({
 		initialize: function(){
 			new LoginView();
@@ -54,7 +55,8 @@ define([
 			'success': 'success',
 			'setting': 'setting',
 			'read': 'read',
-			'statics': 'statics'
+			'statics': 'statics',
+			'blog-readBible': 'blog'
 		},
 		welcome: function(){
 			new MainView().render();
@@ -85,6 +87,9 @@ define([
 		},
 		statics: function(){
 			new StatisticView().render();
+		},
+		blog: function(){
+			new BlogView().render();
 		}
 	});
 });
