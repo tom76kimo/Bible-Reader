@@ -1,18 +1,22 @@
 <% var user = JSON.parse(user); %>
 <div class="jumbotron"  style="width: 764px; margin-left: auto; margin-right: auto;">
   <div class="container" style="width: 100%;">
-    <h1>Hello, world!</h1>
-    <p>This is a template for a simple marketing or informational website. It includes a large callout called a jumbotron and three supporting pieces of content. Use it as a starting point to create something more unique.</p>
-    
-	<img src="/assets/images/man.png" alt="" class="img-thumbnail" width="140" height="140" style="float: left;">
-	
-	<address style="float: left; margin-left: 30px; width: 500px;">
-		<strong><%=user.username%></strong><br>
-		<%=user.nickname%><br>
-		Description Here.
-	</address>
+	<div style="margin: 20px 0px;">
+		<div class="row">
+			<div class="col-xs-3">
+				<img src="/assets/images/man.png" alt="" class="img-thumbnail" width="140" height="140" style="float: left;">
+			</div>
+			<div class="col-xs-9">
+				<address style="float: left; margin-left: 30px; width: 500px;">
+					<h3><%=user.username%></h3><br>
+					<%=user.nickname%><br>
+					Description Here.
+				</address>
+			</div>
+		</div>
+	</div>
 	<div style="clear: both"></div>
-	
+		
 	<div style="width: 100%;">Progress: <strong><%=percentage%>%</strong></div>
 	<div class="progress" style="width: 100%;">
 		<div class="progress-bar" role="progressbar" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=percentage%>%;">
