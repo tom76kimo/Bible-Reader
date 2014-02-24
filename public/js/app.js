@@ -6,6 +6,7 @@ requirejs.config({
 	  view: '../app/view',
 	  router: '../app/router',
 	  collection: '../app/collection',
+	  lan: '../app/model/lan',
 	  tpl: '../tpl'
 	},
 	shim: {
@@ -26,7 +27,7 @@ requirejs.config({
 	}
 });
 
-define(['jquery', 'underscore', 'backbone', 'bootstrap', 'router/router'], function($, _, Backbone, bootstrap, Router){
+define(['jquery', 'underscore', 'backbone', 'bootstrap', 'router/router', 'lan/tw'], function($, _, Backbone, bootstrap, Router){
 	
 	new Router();
 	Backbone.history.start();

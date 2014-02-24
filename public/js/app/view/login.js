@@ -11,12 +11,6 @@ define([
 ], function($, _, Backbone, bootstrap, MainMessage, tpl, loggedTpl, User, Website){
 	return Backbone.View.extend({
 		el: $('#login'),
-		messageString: {
-			BLANK_ID_PASSWORD: '帳號密碼不可以空白。',
-			CHECK_ID_PASSWORD_CORRECTNESS: '<strong>注意!</strong>登入失敗，請檢查帳號密碼是否正確。',
-			LOGIN_SUCCESS: '，您已經登入成功!!!',
-			LOGOUT_SUCCESS: '您已經成功登出。'
-		},
 		initialize: function(){
 			var self = this;
 			this.mainMessage = new MainMessage();
@@ -102,7 +96,7 @@ define([
 			    password = this.$('#password').val();
 
 			if(userId === '' || password === ''){
-				this.mainMessage.warning().render(this.messageString.BLANK_ID_PASSWORD);
+				this.mainMessage.warning().render(_LAN_BLANK_ID_PASSWORD);
 				return;
 			}
 			var self = this;
@@ -110,7 +104,7 @@ define([
 				if(data.status === 1)
 					hasLogged(data.id);
 				else{
-					self.mainMessage.danger().render(self.messageString.CHECK_ID_PASSWORD_CORRECTNESS);
+					self.mainMessage.danger().render(_LAN_CHECK_ID_PASSWORD_CORRECTNESS);
 				}
 			}, 'json');
 
@@ -121,7 +115,7 @@ define([
 						Website.setUser(model);
 						var nickname = model.get('nickname') || model.get('username');
 						self.loggedRender(nickname);
-						self.mainMessage.success().render('<strong>Hello!! ' + nickname + '</strong>' + self.messageString.LOGIN_SUCCESS);
+						self.mainMessage.success().render('<strong>Hello!! ' + nickname + '</strong>，' + _LAN_LOGIN_SUCCESS + '!!!');
 					}
 				});
 			}
@@ -132,7 +126,7 @@ define([
 			$.post('/logout', {}, function(){
 				Website.clearUser();
 				self.loggoutRender();
-				self.mainMessage.warning().render(self.messageString.LOGOUT_SUCCESS);
+				self.mainMessage.warning().render(_LAN_LOGOUT_SUCCESS);
 				Website.navigate('/', {trigger: true, replace: true});
 			});
 		}

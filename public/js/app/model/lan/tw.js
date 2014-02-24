@@ -1,0 +1,11 @@
+var _LAN_LOGIN = '登入', 
+    _LAN_SIGNUP = '註冊', 
+    _LAN_LOGIN_SUCCESS = '您已經登入成功',
+    _LAN_LOGOUT_SUCCESS = '您已經成功登出。',
+    _LAN_BLANK_ID_PASSWORD = '帳號密碼不可以空白。',
+    _LAN_CHECK_ID_PASSWORD_CORRECTNESS = '<strong>注意!</strong>登入失敗，請檢查帳號密碼是否正確。',
+    _LAN_SIGNUP_NOW = '現在就馬上為自己申請一個帳號',
+    _LAN_SIGNUP_NOW_SUBTITLE = '歡迎使用Bible Reader，現在馬上就為自己申請一個帳號，一起徜徉在讀經的計畫裡。',
+    _LAN_BE_ATTENTION = '注意事項：',
+    _LAN_USERID_NOT_LESS_FOUR_WORDS = '- User ID 不可以小於4個字。',
+    _LAN_PASSWORD_NOT_LESS_FOUR_WORDS = '- Password 也不可以小於4個字。';
