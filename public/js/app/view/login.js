@@ -75,7 +75,10 @@ define([
 			//this.$el.animate({opacity: 0}, 400, changeContent);
 			this.fadeOut(changeContent);
 			function changeContent(){
-				self.$el.html(_.template(loggedTpl, {nickname: nickname}));
+				var isAdmin = false;
+				if(Website.getUser().get('username') === 'admin')
+					isAdmin = true;
+				self.$el.html(_.template(loggedTpl, {nickname: nickname, isAdmin: isAdmin}));
 				self.$('button').tooltip();
 				self.$('a').tooltip();
 				self.fadeIn();

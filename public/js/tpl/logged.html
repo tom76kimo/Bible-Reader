@@ -3,6 +3,9 @@
 		<a class="btn btn-info " href="#read" style="margin-left: auto; margin-right: auto;">Start Reading <span class="glyphicon glyphicon-fire"></span></a>
 		<a class="btn btn-default" href="#setting" title="Setting"><%=nickname%> <span class="glyphicon glyphicon-user"></span></a>
 	</div>
+	<% if(isAdmin === true) { %>
+		<a class="btn btn-default" href="#dashboard">Dashboard</a>
+	<% } %>
 	<button id="logout" type="button" class="btn btn-warning" data-toggle="tooltip" data-placement="bottom" title="Log Out">
 		<span class="glyphicon glyphicon-log-out"></span>
 	</button>
