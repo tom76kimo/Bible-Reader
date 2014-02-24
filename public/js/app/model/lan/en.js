@@ -8,4 +8,5 @@ var _LAN_LOGIN = 'Login',
     _LAN_SIGNUP_NOW_SUBTITLE = 'Welcome to use Bible Reader, sign up right now and enjoy reading bible.',
     _LAN_BE_ATTENTION = 'Attention:',
     _LAN_USERID_NOT_LESS_FOUR_WORDS = '- User ID shell not less than 4 words.',
-    _LAN_PASSWORD_NOT_LESS_FOUR_WORDS = '- Password shell not less than 4 words, either.';
+    _LAN_PASSWORD_NOT_LESS_FOUR_WORDS = '- Password shell not less than 4 words, either.',
+    _LAN_SEE_RANK = 'See The Rank';
