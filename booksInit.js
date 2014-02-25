@@ -22,6 +22,7 @@ new Book({name: 'Job', cname: '約伯記', shortName: 'Job', amount: 42, order: 
 new Book({name: 'Psalms', cname: '詩篇', shortName: 'Psm', amount: 150, order: 19}).save();
 new Book({name: 'Proverbs', cname: '箴言', shortName: 'Pro', amount: 31, order: 20}).save();
 */
+/*
 new Book({name: 'Ecclesiastes', cname: '傳道書', shortName: 'Eccl', amount: 12, order: 21}).save();
 new Book({name: 'Song of Solomon', cname: '雅歌', shortName: 'Song', amount: 8, order: 22}).save();
 new Book({name: 'Isaiah', cname: '以賽亞書', shortName: 'Is', amount: 66, order: 23}).save();
@@ -42,3 +43,4 @@ new Book({name: 'Haggai', cname: '哈該書', shortName: 'Hag', amount: 2, order
 new Book({name: 'Zechariah', cname: '撒迦利亞書', shortName: 'Zech', amount: 14, order: 38}).save();
 new Book({name: 'Malachi', cname: '瑪拉基書', shortName: 'Mal', amount: 4, order: 39}).save();
 new Book({name: 'Matthew', cname: '馬太福音', shortName: 'Matt', amount: 28, order: 40}).save();
+*/

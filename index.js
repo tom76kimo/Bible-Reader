@@ -64,6 +64,7 @@ app.configure(function(){
 	app.use(express.compress());
 	app.use('/', express.static(__dirname + '/public', { maxAge: oneDay }));
 	app.use('/', express.directory(__dirname + '/public', { maxAge: oneDay }));
+	app.disable('etag');
 	app.use(express.cookieParser());
 	app.use(express.json());
 	app.use(express.urlencoded());
@@ -112,12 +113,16 @@ app.post('/logged', function(req, res){
 
 app.get('/hasreads', function(req, res){
 	HasRead.find({userId: req.user._id}, function(err, hasRead){
+		res.setHeader('Last-Modified', (new Date()).toUTCString());
+		res.setHeader('cache-control', 'private, max-age=0, no-cache');
+		console.log(hasRead);
 		res.send(200, hasRead);
 	});
 	
 });
 
 app.all('*', function(req, res, next){
+	res.removeHeader('x-power-by');
 	next();
 });
 
