@@ -2,24 +2,15 @@ var express = require('express');
 var app = express();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
-var database = require('./database');
-var User = database.User;
-var Book = database.Book;
-var HasRead = database.HasRead;
+var database = require('./database'),
+	User = database.User,
+	Book = database.Book,
+	HasRead = database.HasRead,
+	Profile = database.Profile;
 var crypto = require('crypto');
 
 
-/*
-new Book({name: '2 Chronicles', cname: '歷代志下', shortName: '2Ch', amount: 36}).save();
-new Book({name: 'Ezra', cname: '以斯拉記', shortName: 'Ezr', amount: 10}).save();
-new Book({name: 'Nehemiah', cname: '尼希米記', shortName: 'Neh', amount: 13}).save();
-new Book({name: 'Esther', cname: '以斯帖記', shortName: 'Est', amount: 10}).save();
-new Book({name: 'Job', cname: '約伯記', shortName: 'Job', amount: 42}).save();
-new Book({name: 'Psalms', cname: '詩篇', shortName: 'Psm', amount: 150}).save();
-new Book({name: 'Proverbs', cname: '箴言', shortName: 'Pro', amount: 31}).save();
-new Book({name: 'Ecclesiastes', cname: '傳道書', shortName: 'Ecc', amount: 12}).save();
-new Book({name: 'Song of Songs', cname: '雅歌', shortName: 'Son', amount: 8}).save();
-*/
+
 //new HasRead({userId: '1', bookId: '1', readChapter: '1,2'}).save();
 /*
 HasRead.findOne({userId: '1', bookId: '1'}, function(err, hasRead){
@@ -147,6 +138,33 @@ app.put('/hasread', function(req, res){
 		res.send(200);
 	});
 	//res.send(200);
+});
+
+app.post('/getProfile', function(req, res){
+	var userId = req.body.userId;
+	Profile.findOne({userId: userId}, function(err, profile){
+		console.log(userId);
+		if(err)res.send(404);
+		if(!profile)res.send(404);
+		if(profile === null) res.send(404);
+		else
+		    res.send(200, {id: profile._id});
+	});
+});
+
+app.get('/profile/:id', function(req, res){
+	console.log(req.params);
+	Profile.find({_id: req.params.id}, function(err, profile){
+		if(err) res.send(404);
+		if(!profile) res.send(404);
+		if(profile === null) res.send(404);
+		else
+		    res.send(200, profile);
+	});
+});
+
+app.put('/profile', function(){
+	
 });
 
 app.post('/login', function(req, res, next){
