@@ -12,6 +12,10 @@ var Book = mongoose.model('Books', bookSchema);
 var hasReadSchema = new mongoose.Schema({userId: String, bookId: String, readChapter: String, amount: Number, totalAmount: Number});
 var HasRead = mongoose.model('hasread', hasReadSchema);
 
+var profileSchema = new mongoose.Schema({userId: String, nickname: String, email: String, description: String});
+var Profile = mongoose.model('profile', profileSchema);
+
 exports.User = User;
 exports.Book = Book;
 exports.HasRead = HasRead;
+exports.Profile = Profile;
