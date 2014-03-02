@@ -143,17 +143,24 @@ app.put('/hasread', function(req, res){
 app.post('/getProfile', function(req, res){
 	var userId = req.body.userId;
 	Profile.findOne({userId: userId}, function(err, profile){
+
+		console.log(userId);
 		if(err)res.send(404);
 		if(!profile)res.send(404);
-		res.send(200, profile._id);
+		if(profile === null) res.send(404);
+		else
+		    res.send(200, {id: profile._id});
 	});
 });
 
 app.get('/profile/:id', function(req, res){
+	console.log(req.params);
 	Profile.find({_id: req.params.id}, function(err, profile){
 		if(err) res.send(404);
 		if(!profile) res.send(404);
-		res.send(200, profile);
+		if(profile === null) res.send(404);
+		else
+		    res.send(200, profile);
 	});
 });
 

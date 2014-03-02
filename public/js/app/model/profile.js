@@ -4,7 +4,7 @@ define([
 ], function(_, Backbone){
 	return Backbone.Model.extend({
 		idAttribute: "_id",
-		url: '/profile',
+		urlRoot: '/profile',
 		defaults: {
 			userId: undefined,
 			nickname: undefined,

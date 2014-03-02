@@ -3,10 +3,11 @@ define([
 	'underscore',
 	'backbone',
 	'model/website',
+	'model/profile',
 	'collection/books',
 	'collection/hasReads',
 	'text!tpl/setting.html'
-], function($, _, Backbone, Website, Books, HasReads, tpl){
+], function($, _, Backbone, Website, Profile, Books, HasReads, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -16,6 +17,7 @@ define([
 			var userFinished = $.Deferred();
 			var hasReadsFinished = $.Deferred();
 			var booksFinished = $.Deferred();
+
 			user.fetch({
 				success: function(model){
 					userFinished.resolve();
@@ -59,8 +61,19 @@ define([
 			$.when(userFinished, hasReadsFinished, booksFinished).done(function(){
 				var percentage = calculate();
 				//console.log(badges);
-				self.$el.html(self.template({user: JSON.stringify(user), percentage: percentage, badges: badges}));
 				
+				$.post('/getProfile', {userId: user.get('_id')}, function(data){
+					self.profile = new Profile({_id: data.id});
+					self.profile.on('change', function(){
+						console.log(self.profile.hasChanged('userId'));
+					});
+					self.profile.fetch({
+						success: function(model){
+							console.log(model);
+							self.$el.html(self.template({user: JSON.stringify(user), profile: JSON.stringify(model), percentage: percentage, badges: badges}));
+						}
+					});
+				}, 'json');
 			});
 			
 			function calculate(){
@@ -78,6 +91,16 @@ define([
 				var percentage = Math.floor((currentChapterAmount/bibleTotalChapterAmount)*10000);
 				return (percentage/100);
 			}
+		},
+		events: {
+			'click #saveBtn': 'saveProfile'
+		},
+		saveProfile: function(){
+			var nickname = this.$('#nickname').val(),
+			    email = this.$('#email').val(),
+			    description = this.$('#description').text();
+			this.profile.set({nickname: nickname, email: email, description: description});
+			console.log(this.profile);
 		}
 	});
 });
