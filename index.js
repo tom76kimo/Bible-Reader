@@ -154,7 +154,7 @@ app.post('/getProfile', function(req, res){
 
 app.get('/profile/:id', function(req, res){
 	console.log(req.params);
-	Profile.find({_id: req.params.id}, function(err, profile){
+	Profile.findOne({_id: req.params.id}, function(err, profile){
 		if(err) res.send(404);
 		if(!profile) res.send(404);
 		if(profile === null) res.send(404);
@@ -163,8 +163,19 @@ app.get('/profile/:id', function(req, res){
 	});
 });
 
-app.put('/profile', function(){
-	
+app.put('/profile/:id', function(req, res){
+	var data = {
+		nickname: req.body.nickname,
+		email: req.body.email,
+		description: req.body.description
+	};
+	console.log(req.params.id);
+	Profile.update({_id: req.params.id}, data, function(err, numberAffected, raw){
+		if(err){
+			res.send(500);
+		}
+		res.send(200, {});
+	});
 });
 
 app.post('/login', function(req, res, next){

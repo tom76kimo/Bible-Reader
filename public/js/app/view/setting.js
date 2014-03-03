@@ -4,10 +4,11 @@ define([
 	'backbone',
 	'model/website',
 	'model/profile',
+	'view/mainMessage',
 	'collection/books',
 	'collection/hasReads',
 	'text!tpl/setting.html'
-], function($, _, Backbone, Website, Profile, Books, HasReads, tpl){
+], function($, _, Backbone, Website, Profile, MainMessageView, Books, HasReads, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -64,12 +65,8 @@ define([
 				
 				$.post('/getProfile', {userId: user.get('_id')}, function(data){
 					self.profile = new Profile({_id: data.id});
-					self.profile.on('change', function(){
-						console.log(self.profile.hasChanged('userId'));
-					});
 					self.profile.fetch({
 						success: function(model){
-							console.log(model);
 							self.$el.html(self.template({user: JSON.stringify(user), profile: JSON.stringify(model), percentage: percentage, badges: badges}));
 						}
 					});
@@ -96,11 +93,23 @@ define([
 			'click #saveBtn': 'saveProfile'
 		},
 		saveProfile: function(){
+			var self = this;
 			var nickname = this.$('#nickname').val(),
 			    email = this.$('#email').val(),
-			    description = this.$('#description').text();
-			this.profile.set({nickname: nickname, email: email, description: description});
-			console.log(this.profile);
+			    description = this.$('#description').val();
+			this.$('#loadingGif').show();
+			this.profile.save({nickname: nickname, email: email, description: description}, {
+				success: function(model, response, options){
+					self.$('#loadingGif').hide();
+					self.$('#myModal').modal('hide');
+					new MainMessageView().success().render('Profile Save Success');
+				},
+				error: function(model, response, options){
+					self.$('#loadingGif').hide();
+					self.$('#myModal').modal('hide');
+					new MainMessageView().warning().render('Profile Save Failed');
+				}
+			});
 		}
 	});
 });
