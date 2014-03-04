@@ -44,3 +44,31 @@ new Book({name: 'Zechariah', cname: '撒迦利亞書', shortName: 'Zech', amount
 new Book({name: 'Malachi', cname: '瑪拉基書', shortName: 'Mal', amount: 4, order: 39}).save();
 new Book({name: 'Matthew', cname: '馬太福音', shortName: 'Matt', amount: 28, order: 40}).save();
 */
+/*
+new Book({name: 'Mark', cname: '馬可福音', shortName: 'Mak', amount: 16, order: 41}).save();
+new Book({name: 'Luke', cname: '路加福音', shortName: 'Luk', amount: 24, order: 42}).save();
+new Book({name: 'John', cname: '約翰福音', shortName: 'Jhn', amount: 21, order: 43}).save();
+new Book({name: 'Acts', cname: '使徒行傳', shortName: 'Act', amount: 28, order: 44}).save();
+new Book({name: 'Romans', cname: '羅馬書', shortName: 'Rom', amount: 16, order: 45}).save();
+new Book({name: '1 Corinthians', cname: '哥林多前書', shortName: '1Co', amount: 16, order: 46}).save();
+new Book({name: '2 Corinthians', cname: '哥林多後書', shortName: '2Co', amount: 13, order: 47}).save();
+new Book({name: 'Galatians', cname: '加拉太書', shortName: 'Gal', amount: 6, order: 48}).save();
+new Book({name: 'Ephesians', cname: '以弗所書', shortName: 'Eph', amount: 6, order: 49}).save();
+new Book({name: 'Philippians', cname: '腓利比書', shortName: 'Phl', amount: 4, order: 50}).save();
+new Book({name: 'Colossians', cname: '歌羅西書', shortName: 'Col', amount: 4, order: 51}).save();
+new Book({name: '1 Thessalonians', cname: '帖撒羅尼迦前書', shortName: '1Ts', amount: 5, order: 52}).save();
+new Book({name: '2 Thessalonians', cname: '帖撒羅尼迦後書', shortName: '2Ts', amount: 3, order: 53}).save();
+new Book({name: '1 Timothy', cname: '提摩太前書', shortName: '1Ti', amount: 6, order: 54}).save();
+new Book({name: '2 Timothy', cname: '提摩太後書', shortName: '2Ti', amount: 4, order: 55}).save();
+new Book({name: 'Titus', cname: '提多書', shortName: 'Tit', amount: 3, order: 56}).save();
+new Book({name: 'Philemon', cname: '腓利門書', shortName: 'Phm', amount: 1, order: 57}).save();
+new Book({name: 'Hebrews', cname: '希伯來書', shortName: 'Heb', amount: 13, order: 58}).save();
+new Book({name: 'James', cname: '雅各書', shortName: 'Jas', amount: 5, order: 59}).save();
+new Book({name: '1 Peter', cname: '彼得前書', shortName: '1Pe', amount: 5, order: 60}).save();
+new Book({name: '2 Peter', cname: '彼得後書', shortName: '2Pe', amount: 3, order: 61}).save();
+new Book({name: '1 John', cname: '約翰壹書', shortName: '1Jn', amount: 5, order: 62}).save();
+*/
+new Book({name: '2 John', cname: '約翰貳書', shortName: '2Jn', amount: 1, order: 63}).save();
+new Book({name: '3 John', cname: '約翰參書', shortName: '3Jn', amount: 1, order: 64}).save();
+new Book({name: 'Jude', cname: '猶大書', shortName: 'Jud', amount: 1, order: 65}).save();
+new Book({name: 'Revelation', cname: '啟示錄', shortName: 'Rev', amount: 22, order: 66}).save();
