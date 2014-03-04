@@ -71,7 +71,7 @@ define([
 			if(index > -1)
 				readChapterArray.splice(index, 1);
 			readChapter = readChapterArray.join(',');
-			console.log(readChapterArray);
+			//console.log(readChapterArray);
 			this.hasRead.set({readChapter: readChapter, amount: (readAmount-1)});
 			this.hasRead.save({
 				error: function(){

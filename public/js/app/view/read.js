@@ -33,7 +33,11 @@ define([
 			$.when(bookFinished, hasReadFinished).done(function(){
 				self.$el.html(self.template());
 				for(var i=0; i<self.books.length; ++i){
-					var div = $('<div>').appendTo('#readPanel');
+					var div;
+					if(i<39)
+						div = $('<div>').appendTo('#readPanel');
+					else
+						div = $('<div>').appendTo('#newReadPanel');
 					var book = self.books.models[i];
 					var hasRead = self.hasReads.findWhere({bookId: book.get('_id')});
 					if(hasRead){

@@ -3,6 +3,21 @@
     <h1>點擊您已讀的章節</h1>
     <p>在以下的選單當中，展開你要點擊的書卷，點擊你已讀的章節，就大功告成了。當你讀完某一卷書，就會得到獎章(
     	Badge)。是不是很酷？享受讀經吧。</p>
-	<div id="readPanel" class="panel-group" id="accordion"></div>
+    <!-- Nav tabs -->
+	<ul class="nav nav-tabs">
+	  <li class="active"><a href="#home" data-toggle="tab">舊約</a></li>
+	  <li><a href="#profile" data-toggle="tab">新約</a></li>
+	</ul>
+
+	<!-- Tab panes -->
+	<div class="tab-content">
+	  <div class="tab-pane active" id="home">
+	  	<div id="readPanel" class="panel-group" id="accordion"></div>
+	  </div>
+	  <div class="tab-pane" id="profile">
+	  	<div id="newReadPanel" class="panel-group" id="accordion"></div>
+	  </div>
+	</div>
+	
   </div>
 </div>
