@@ -5,10 +5,11 @@ define([
 	'model/website',
 	'model/profile',
 	'view/mainMessage',
+	'view/settingAddr',
 	'collection/books',
 	'collection/hasReads',
 	'text!tpl/setting.html'
-], function($, _, Backbone, Website, Profile, MainMessageView, Books, HasReads, tpl){
+], function($, _, Backbone, Website, Profile, MainMessageView, SettingAddrView, Books, HasReads, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -67,7 +68,8 @@ define([
 					self.profile = new Profile({_id: data.id});
 					self.profile.fetch({
 						success: function(model){
-							self.$el.html(self.template({user: JSON.stringify(user), profile: JSON.stringify(model), percentage: percentage, badges: badges}));
+							self.$el.html(self.template({profile: JSON.stringify(model), percentage: percentage, badges: badges}));
+							self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: model}).render();
 						}
 					});
 				}, 'json');
@@ -102,6 +104,7 @@ define([
 				success: function(model, response, options){
 					self.$('#loadingGif').hide();
 					self.$('#myModal').modal('hide');
+					self.addressView.render();
 					new MainMessageView().success().render('Profile Save Success');
 				},
 				error: function(model, response, options){

@@ -1,5 +1,4 @@
 <% 
-	var user = JSON.parse(user);
 	var profile = JSON.parse(profile);	
 %>
 <div class="jumbotron"  style="width: 60%; min-width: 300px; margin-left: auto; margin-right: auto;">
@@ -10,13 +9,8 @@
 			<div class="col-md-3 col-sm-4 col-xs-12">
 				<img src="/assets/images/man.png" alt="" class="img-thumbnail" width="140" height="140" style="float: left;">
 			</div>
-			<div class="col-md-9 col-sm-8 col-xs-12">
-				<address style="float: left; margin-left: 30px; width: 500px;">
-					<h3><%-user.username%></h3><br>
-					<%-profile.nickname%><br>
-                    <%-profile.email%><br>
-					<%-profile.description%>
-				</address>
+			<div id="address" class="col-md-9 col-sm-8 col-xs-12">
+				
 			</div>
 		</div>
 	</div>

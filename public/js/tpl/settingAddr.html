@@ -1,0 +1,9 @@
+<% var user = JSON.parse(user),
+       profile = JSON.parse(profile);
+%>
+<address style="float: left; margin-left: 30px; width: 500px;">
+	<h3><%-user.username%></h3><br>
+	<%-profile.nickname%><br>
+    <%-profile.email%><br>
+	<%-profile.description%>
+</address>
