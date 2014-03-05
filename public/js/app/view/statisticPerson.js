@@ -16,7 +16,7 @@ define([
 			$.post('/progress', {userId: user.get('_id')}, function(data){
 				var percentage = calPercentage(data.totalReadChapter);
 				var badges = getBadgesName(data.badges);
-				self.$el.html(self.template({percentage: percentage, username: user.get('nickname') || user.get('username'), userId: user.get('_id'), badges: badges}));
+				self.$el.html(self.template({percentage: percentage, username: user.get('username'), userId: user.get('_id'), badges: badges}));
 			}, 'json');
 
 			function calPercentage(value){
