@@ -167,8 +167,8 @@ app.put('/profile/:id', function(req, res){
 		email: req.body.email,
 		description: req.body.description
 	};
-	console.log(req.params.id);
-	Profile.update({_id: req.params.id}, data, function(err, numberAffected, raw){
+	//console.log(req.params.id);
+	Profile.update({userId: req.params.id}, data, function(err, numberAffected, raw){
 		if(err){
 			res.send(500);
 		}
