@@ -3,7 +3,7 @@ define([
 	'backbone'
 ], function(_, Backbone){
 	return Backbone.Model.extend({
-		idAttribute: "_id",
+		idAttribute: "userId",
 		urlRoot: '/profile',
 		defaults: {
 			userId: undefined,

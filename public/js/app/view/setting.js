@@ -63,7 +63,7 @@ define([
 			$.when(userFinished, hasReadsFinished, booksFinished).done(function(){
 				var percentage = calculate();
 				//console.log(badges);
-				
+				/*
 				$.post('/getProfile', {userId: user.get('_id')}, function(data){
 					self.profile = new Profile({_id: data.id});
 					self.profile.fetch({
@@ -73,6 +73,14 @@ define([
 						}
 					});
 				}, 'json');
+				*/
+				self.profile = new Profile({userId: user.get('_id')});
+				self.profile.fetch({
+					success: function(model){
+						self.$el.html(self.template({profile: JSON.stringify(model), percentage: percentage, badges: badges}));
+						self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: model}).render();
+					}
+				});
 			});
 			
 			function calculate(){

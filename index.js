@@ -143,7 +143,6 @@ app.put('/hasread', function(req, res){
 app.post('/getProfile', function(req, res){
 	var userId = req.body.userId;
 	Profile.findOne({userId: userId}, function(err, profile){
-		console.log(userId);
 		if(err)res.send(404);
 		if(!profile)res.send(404);
 		if(profile === null) res.send(404);
@@ -153,8 +152,7 @@ app.post('/getProfile', function(req, res){
 });
 
 app.get('/profile/:id', function(req, res){
-	console.log(req.params);
-	Profile.findOne({_id: req.params.id}, function(err, profile){
+	Profile.findOne({userId: req.params.id}, function(err, profile){
 		if(err) res.send(404);
 		if(!profile) res.send(404);
 		if(profile === null) res.send(404);
