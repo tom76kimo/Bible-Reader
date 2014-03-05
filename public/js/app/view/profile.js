@@ -4,8 +4,9 @@ define([
 	'backbone',
 	'model/profile',
 	'model/website',
+	'collection/groups',
 	'text!tpl/profile.html'
-], function($, _, Backbone, Profile, Website, tpl){
+], function($, _, Backbone, Profile, Website, Groups, tpl){
 	return Backbone.View.extend({
 		template: _.template(tpl),
 		el: $('#main'),
@@ -18,7 +19,12 @@ define([
 			profile.fetch({
 				success: function(model){
 					Website.getUserById(self.userId, function(user){
-						self.$el.html(self.template({user: JSON.stringify(user), profile: JSON.stringify(profile)}));
+						new Groups().fetch({
+							success: function(groups){
+								var groupName = groups.findWhere({_id: profile.get('group')}).get('name');
+								self.$el.html(self.template({user: JSON.stringify(user), profile: JSON.stringify(profile), groupName: groupName}));
+							}
+						});
 					});
 					
 				},
