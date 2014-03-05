@@ -8,8 +8,9 @@ define([
 	'model/website',
 	'model/statistic',
 	'collection/hasReads',
+	'collection/books',
 	'text!tpl/statistic.html'
-], function($, _, Backbone, ReadPieceView, StatisticPersonView, HasRead, Website, Statistic, HasReads, tpl){
+], function($, _, Backbone, ReadPieceView, StatisticPersonView, HasRead, Website, Statistic, HasReads, Books, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -18,14 +19,18 @@ define([
 			//var this.users;
 			var usersFinisher = $.Deferred(),
 			    booksFinisher = $.Deferred();
-			this.statistic = new Statistic();
-			this.statistic.calculate(function(users){
+			//this.statistic = new Statistic();
+			//this.statistic.calculate(function(users){
+			//	self.users = users;
+			//	usersFinisher.resolve();
+			//});
+			Website.getUsers(function(users){
 				self.users = users;
 				usersFinisher.resolve();
 			});
 
-			$.get('/books', function(data){
-				self.books = data;
+			Website.getBooks(function(books){
+				self.books = books;
 				booksFinisher.resolve();
 			});
 

@@ -16,7 +16,7 @@ define([
 			$.post('/progress', {userId: user.get('_id')}, function(data){
 				var percentage = calPercentage(data.totalReadChapter);
 				var badges = getBadgesName(data.badges);
-				self.$el.html(self.template({percentage: percentage, username: user.get('nickname') || user.get('username'), badges: badges}));
+				self.$el.html(self.template({percentage: percentage, username: user.get('nickname') || user.get('username'), userId: user.get('_id'), badges: badges}));
 			}, 'json');
 
 			function calPercentage(value){
@@ -26,8 +26,8 @@ define([
 
 			function getBookName(bookId){
 				for(var i=0; i<self.books.length; ++i){
-					if(self.books[i]._id === bookId)
-						return self.books[i].cname;
+					if(self.books.models[i].id === bookId)
+						return self.books.models[i].get('cname');
 				}
 			}
 

@@ -1,8 +1,11 @@
 define([
 	'backbone',
-	'collection/books'
-], function(Backbone, Books){
+	'collection/users',
+	'collection/books',
+	'model/profile'
+], function(Backbone, Users, Books, Profile){
 	var website = Backbone.Model.extend({
+		profiles: [],
 		setUser: function(user){
 			this.user = user;
 		},
@@ -32,6 +35,56 @@ define([
 			}
 			else
 				callback && callback(this.books);
+		},
+		getUsers: function(callback){
+			
+			var self = this;
+			this.users = new Users();
+			this.users.fetch({
+				success: function(users){
+					self.users = users;
+					callback && callback(users);
+				},
+				error: function(){
+					throw new Error("Fetch users failed");
+					callback && callback();
+				}
+			});
+		},
+
+		getUserById: function(userId, callback){
+			var model;
+			this.users && (model = this.users.findWhere({_id: userId}));
+			if(model)
+				callback && callback(model);
+			else{
+				this.getUsers(function(users){
+					var model = users.findWhere({_id: userId});
+					callback && callback(model);
+				});
+			}
+		},
+		getProfile: function(userId){
+			if(this.profiles.length === 0){
+
+			}
+			else if(_.find(this.profiles, function(profile){
+
+			})){
+
+			}
+
+			function loadProfile(callback){
+				var profile = new Profile({userId: userId});
+				profile.fetch({
+					success: function(model){
+						callback && callback(model);
+					},
+					error: function(){
+						callback && callback();
+					}
+				});
+			}
 		}
 	});
 	return new website();
