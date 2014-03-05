@@ -107,6 +107,7 @@ define([
 				});
 			});
 			
+			return this;
 			function calculate(){
 				var bibleTotalChapterAmount = 1189;
 				var currentChapterAmount = 0;

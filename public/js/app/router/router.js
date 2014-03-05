@@ -67,8 +67,12 @@ define([
 			//new LoginView().render();
 		},
 		setting: function(){
+			var self = this;
 			this.checkAuth(function(){
-				new SettingView().render();
+				if(!self.settingView)
+					self.settingView = new SettingView().render();
+				else
+					self.settingView.render();
 			});
 		},
 		help: function(){
@@ -99,7 +103,10 @@ define([
 			new DashBoardView().render();
 		},
 		profile: function(id){
-			new ProfileView({userId: id}).render();
+			if(!this.profileView)
+				this.profileView = new ProfileView({userId: id}).render();
+			else
+				this.profileView.render();
 		}
 	});
 });
