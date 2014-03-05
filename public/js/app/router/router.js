@@ -103,10 +103,7 @@ define([
 			new DashBoardView().render();
 		},
 		profile: function(id){
-			if(!this.profileView)
-				this.profileView = new ProfileView({userId: id}).render();
-			else
-				this.profileView.render();
+			new ProfileView({userId: id}).render();
 		}
 	});
 });

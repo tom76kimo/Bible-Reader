@@ -21,7 +21,10 @@ define([
 					Website.getUserById(self.userId, function(user){
 						new Groups().fetch({
 							success: function(groups){
-								var groupName = groups.findWhere({_id: profile.get('group')}).get('name');
+								var group = groups.findWhere({_id: profile.get('group')});
+								var groupName = '無';
+								if(group)
+									groupName = group.get('name');
 								self.$el.html(self.template({user: JSON.stringify(user), profile: JSON.stringify(profile), groupName: groupName}));
 							}
 						});
