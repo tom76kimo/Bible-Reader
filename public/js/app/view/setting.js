@@ -74,6 +74,7 @@ define([
 					});
 				}, 'json');
 				*/
+
 				self.profile = new Profile({userId: user.get('_id')});
 				self.profile.fetch({
 					success: function(model){

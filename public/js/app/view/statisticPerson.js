@@ -12,7 +12,7 @@ define([
 		render: function(){
 			var user = this.model,
 			    self = this;
-			this.$el.html('<td><img src="/assets/images/loading.gif" width="50"/></td>');
+			this.$el.html('<td><img src="/assets/images/loading.gif" width="30"/></td>');
 			$.post('/progress', {userId: user.get('_id')}, function(data){
 				var percentage = calPercentage(data.totalReadChapter);
 				var badges = getBadgesName(data.badges);
