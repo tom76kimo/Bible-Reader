@@ -202,7 +202,11 @@ app.post('/signUp', function(req, res, next){
 			var encodePassword = crypto.createHash('md5').update(password).digest('hex');
 			var thisPerson = new User({username: username, password: encodePassword});
 			thisPerson.save(function(err, user){
-				res.send({status: 1, userId: user._id});
+				var profile = new Profile({userId: user._id, nickname: '', email: '', description: ''});
+				profile.save(function(err, user){
+					res.send({status: 1, userId: user._id});
+				});
+				
 				//console.log('save once');
 			});
 		}
