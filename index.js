@@ -1,4 +1,5 @@
 var express = require('express');
+var https = require('https');
 var app = express();
 var passport = require('passport');
 var LocalStrategy = require('passport-local').Strategy;
@@ -9,7 +10,14 @@ var database = require('./database'),
 	Profile = database.Profile;
 var crypto = require('crypto');
 
+/*
+var fs = require('fs');
 
+var options = {
+  key: fs.readFileSync('server-key.pem'),
+  cert: fs.readFileSync('server-cert.pem')
+};
+*/
 
 //new HasRead({userId: '1', bookId: '1', readChapter: '1,2'}).save();
 /*
@@ -83,7 +91,7 @@ passport.deserializeUser(function(id, done) {
 
 function loadUser(req, res, next){
 	if(req.params.userId){
-		console.log('user id is: ' + req.params.userId);
+		//console.log('user id is: ' + req.params.userId);
 		next();
 	}
 	else
@@ -106,7 +114,7 @@ app.get('/hasreads', function(req, res){
 	HasRead.find({userId: req.user._id}, function(err, hasRead){
 		res.setHeader('Last-Modified', (new Date()).toUTCString());
 		res.setHeader('cache-control', 'private, max-age=0, no-cache');
-		console.log(hasRead);
+		//console.log(hasRead);
 		res.send(200, hasRead);
 	});
 	
@@ -300,3 +308,5 @@ function ensureAuthenticated(req, res, next) {
 }
 
 app.listen(9797);
+
+//https.createServer(options, app).listen(9798);
