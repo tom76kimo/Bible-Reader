@@ -238,6 +238,13 @@ app.get('/books', function(req, res){
 	
 });
 
+app.get('/groups', function(req, res){
+	Group.find({}, function(err, groups){
+    	res.send(groups);
+	});
+	
+});
+
 app.post('/logout', function(req, res){
   req.logOut();
   res.redirect("/");

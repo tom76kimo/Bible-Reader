@@ -8,8 +8,9 @@ define([
 	'view/settingAddr',
 	'collection/books',
 	'collection/hasReads',
+	'collection/groups',
 	'text!tpl/setting.html'
-], function($, _, Backbone, Website, Profile, MainMessageView, SettingAddrView, Books, HasReads, tpl){
+], function($, _, Backbone, Website, Profile, MainMessageView, SettingAddrView, Books, HasReads, Groups, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -19,6 +20,7 @@ define([
 			var userFinished = $.Deferred();
 			var hasReadsFinished = $.Deferred();
 			var booksFinished = $.Deferred();
+			var groupsFinished = $.Deferred();
 
 			user.fetch({
 				success: function(model){
@@ -59,8 +61,18 @@ define([
 					booksFinished.reject();
 			});
 
+			var groups = new Groups();
+			groups.fetch({
+				success: function(){
+					groupsFinished.resolve();
+				},
+				error: function(){
+					groupsFinished.reject();
+				}
+			});
+
 			var badges = [];
-			$.when(userFinished, hasReadsFinished, booksFinished).done(function(){
+			$.when(userFinished, hasReadsFinished, booksFinished, groupsFinished).done(function(){
 				var percentage = calculate();
 				//console.log(badges);
 				/*
@@ -80,6 +92,10 @@ define([
 					success: function(model){
 						self.$el.html(self.template({profile: JSON.stringify(model), percentage: percentage, badges: badges}));
 						self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: model}).render();
+						for(var i=0; i<groups.length; ++i){
+							self.$('#group').append('<option value="'+groups.models[i].get('_id')+'">' + groups.models[i].get('name') + '</option>');
+						}
+						
 					}
 				});
 			});
