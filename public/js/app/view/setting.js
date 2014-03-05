@@ -91,11 +91,18 @@ define([
 				self.profile.fetch({
 					success: function(model){
 						self.$el.html(self.template({profile: JSON.stringify(model), percentage: percentage, badges: badges}));
-						self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: model}).render();
+						var group = model.get('group');
+						var groupName;
 						for(var i=0; i<groups.length; ++i){
-							self.$('#group').append('<option value="'+groups.models[i].get('_id')+'">' + groups.models[i].get('name') + '</option>');
+							if(groups.models[i].get('_id') === group){
+								groupName = groups.models[i].get('name');
+								self.$('#group').append('<option value="'+groups.models[i].get('_id')+'" selected="selected">' + groups.models[i].get('name') + '</option>');
+							}
+								
+							else
+								self.$('#group').append('<option value="'+groups.models[i].get('_id')+'">' + groups.models[i].get('name') + '</option>');
 						}
-						
+						self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: model, groups: groups}).render();
 					}
 				});
 			});
@@ -123,9 +130,11 @@ define([
 			var self = this;
 			var nickname = this.$('#nickname').val(),
 			    email = this.$('#email').val(),
-			    description = this.$('#description').val();
+			    description = this.$('#description').val(),
+			    group = this.$('#group').val();
+
 			this.$('#loadingGif').show();
-			this.profile.save({nickname: nickname, email: email, description: description}, {
+			this.profile.save({nickname: nickname, email: email, description: description, group: group}, {
 				success: function(model, response, options){
 					self.$('#loadingGif').hide();
 					self.$('#myModal').modal('hide');

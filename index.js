@@ -182,7 +182,8 @@ app.put('/profile/:id', function(req, res){
 	var data = {
 		nickname: req.body.nickname,
 		email: req.body.email,
-		description: req.body.description
+		description: req.body.description,
+		group: req.body.group
 	};
 	//console.log(req.params.id);
 	Profile.update({userId: req.params.id}, data, function(err, numberAffected, raw){
