@@ -26,8 +26,8 @@ define([
 				return;				
 			}
 
-			if(userId.length < 4 || password.length < 4){
-				this.mainMessage.warning().render('User ID are too short.');
+			if(password.length < 4){
+				this.mainMessage.warning().render('Password is too short.');
 				//this.$('#formUserid').parent('div').addClass('has-warning has-feedback');
 				//this.$('#formUserid').siblings('span').show();
 				return;	
@@ -50,16 +50,18 @@ define([
 			}, 'json');
 		},
 		changeInput: function(e){
-			if($(e.target).val().length < 4){
-				$(e.target).parent('div').addClass('has-warning has-feedback');
-				$(e.target).siblings('span').show();
-				$(e.target).siblings('.localMessage').html('Too short.');
+			if($(e.target).attr('type') === 'password'){
+				if($(e.target).val().length < 4){
+					$(e.target).parent('div').addClass('has-warning has-feedback');
+					$(e.target).siblings('span').show();
+					$(e.target).siblings('.localMessage').html('Too short.');
+				}
+				else{
+					$(e.target).parent('div').removeClass('has-warning has-feedback');
+					$(e.target).siblings('span').hide();
+					$(e.target).siblings('.localMessage').html('');
+				}				
 			}
-			else{
-				$(e.target).parent('div').removeClass('has-warning has-feedback');
-				$(e.target).siblings('span').hide();
-			}
-
 		}
 	});
 });
