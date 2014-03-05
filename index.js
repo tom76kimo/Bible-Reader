@@ -7,7 +7,8 @@ var database = require('./database'),
 	User = database.User,
 	Book = database.Book,
 	HasRead = database.HasRead,
-	Profile = database.Profile;
+	Profile = database.Profile,
+	Group = database.Group;
 var crypto = require('crypto');
 
 /*
@@ -129,6 +130,14 @@ app.post('/hasread', function(req, res){
 	var hasRead = new HasRead(req.body);
 	hasRead.save(function(err, model){
 		res.send(200, model);
+	});
+});
+
+app.post('/group', function(req, res){
+	var group = new Group(req.body);
+	group.save(function(err, model){
+		if(err) res.send(500);
+		else res.send(200, model);
 	});
 });
 

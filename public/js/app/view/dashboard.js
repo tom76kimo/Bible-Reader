@@ -4,8 +4,9 @@ define([
 	'backbone',
 	'collection/users',
 	'view/dashboard/singleUser',
+	'view/dashboard/groupManager',
 	'text!tpl/dashboard.html'
-], function($, _, Backbone, Users, SingleUserView, tpl){
+], function($, _, Backbone, Users, SingleUserView, GroupManagerView, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -21,6 +22,13 @@ define([
 				},
 				error: function(){}
 			});
+			return this;
+		},
+		events: {
+			'click #groupManager': 'groupManage'
+		},
+		groupManage: function(){
+			new GroupManagerView({el: this.$('.main')}).render();
 		}
 	});
 });

@@ -12,10 +12,14 @@ var Book = mongoose.model('Books', bookSchema);
 var hasReadSchema = new mongoose.Schema({userId: String, bookId: String, readChapter: String, amount: Number, totalAmount: Number});
 var HasRead = mongoose.model('hasread', hasReadSchema);
 
-var profileSchema = new mongoose.Schema({userId: String, nickname: String, email: String, description: String});
+var profileSchema = new mongoose.Schema({userId: String, nickname: String, email: String, description: String, group: String});
 var Profile = mongoose.model('profile', profileSchema);
+
+var groupSchema = new mongoose.Schema({name: String, amount: Number, net: String, pastor: String});
+var Group = mongoose.model('group', groupSchema);
 
 exports.User = User;
 exports.Book = Book;
 exports.HasRead = HasRead;
 exports.Profile = Profile;
+exports.Group = Group;
