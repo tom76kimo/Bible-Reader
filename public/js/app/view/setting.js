@@ -4,33 +4,52 @@ define([
 	'backbone',
 	'model/website',
 	'model/profile',
+	'model/settingProfile',
 	'view/mainMessage',
 	'view/settingAddr',
 	'collection/books',
 	'collection/hasReads',
 	'collection/groups',
 	'text!tpl/setting.html'
-], function($, _, Backbone, Website, Profile, MainMessageView, SettingAddrView, Books, HasReads, Groups, tpl){
+], function($, _, Backbone, Website, Profile, SettingProfile, MainMessageView, SettingAddrView, Books, HasReads, Groups, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
 		render: function(){
 			var self = this;
 			var user = Website.getUser();
-			var userFinished = $.Deferred();
+			var sProFinished = $.Deferred();
 			var hasReadsFinished = $.Deferred();
 			var booksFinished = $.Deferred();
 			var groupsFinished = $.Deferred();
 
+			/*
 			user.fetch({
 				success: function(model){
 					userFinished.resolve();
 					//self.$el.html(self.template({user: JSON.stringify(model)}));
+					var sPro = new SettingProfile({userId: user.id});
+					sPro.fetch({
+						success: function(){
+							console.log(sPro);
+						}
+					});
 				},
 				error: function(){
 					userFinished.reject();
 				}
+			}); */
+
+			var sPro = new SettingProfile({userId: user.id});
+			sPro.fetch({
+				success: function(){
+					sProFinished.resolve();
+				},
+				error: function(){
+					sProFinished.reject();
+				}
 			});
+
 			var hasReads = new HasReads();
 			hasReads.fetch({
 				success: function(){
@@ -72,7 +91,7 @@ define([
 			});
 
 			var badges = [];
-			$.when(userFinished, hasReadsFinished, booksFinished, groupsFinished).done(function(){
+			$.when(sProFinished, hasReadsFinished, booksFinished, groupsFinished).done(function(){
 				var percentage = calculate();
 				//console.log(badges);
 				/*
@@ -86,8 +105,21 @@ define([
 					});
 				}, 'json');
 				*/
+				self.$el.html(self.template({profile: JSON.stringify(sPro), percentage: percentage, badges: badges}));
+				var group = sPro.get('group');
+				for(var i=0; i<groups.length; ++i){
+					if(groups.models[i].get('name') === group){
+						self.$('#group').append('<option value="'+groups.models[i].get('_id')+'" selected="selected">' + groups.models[i].get('name') + '</option>');
+					}
+						
+					else
+						self.$('#group').append('<option value="'+groups.models[i].get('_id')+'">' + groups.models[i].get('name') + '</option>');
+				}
 
-				self.profile = new Profile({userId: user.get('_id')});
+				self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: sPro, groups: groups}).render();
+
+				/*
+				self.profile = new Profile({userId: user.id});
 				self.profile.fetch({
 					success: function(model){
 						self.$el.html(self.template({profile: JSON.stringify(model), percentage: percentage, badges: badges}));
@@ -102,9 +134,10 @@ define([
 							else
 								self.$('#group').append('<option value="'+groups.models[i].get('_id')+'">' + groups.models[i].get('name') + '</option>');
 						}
+						model.set({groupName: groupName});
 						self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: model, groups: groups}).render();
 					}
-				});
+				}); */
 			});
 			
 			return this;
