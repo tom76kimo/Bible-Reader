@@ -194,6 +194,39 @@ app.put('/profile/:id', function(req, res){
 	});
 });
 
+app.get('/settingProfile/:id', function(req, res){
+	var userId = req.params.id;
+	var sendData = {};
+	Profile.findOne({userId: req.params.id}, function(err, profile){
+		if(err) res.send(404);
+		if(!profile) res.send(404);
+		if(profile === null) res.send(404);
+		else{
+			if(!req.user)
+				res.send(404);
+
+			sendData.description = profile.description || '';
+			sendData.email = profile.email || '';
+			sendData.group = profile.group || '';
+			sendData.nickname = profile.nickname || '';
+			sendData.userId = profile.userId || '';
+			sendData.username = req.user.username;
+
+			Group.find({}, function(err, groups){
+				if(err) res.send(404);
+				if(!groups) res.send(404);
+				for(var i=0; i<groups.length; ++i){
+					if(groups[i]._id == sendData.group){
+						sendData.group = groups[i].name;
+					}
+						console.log(groups[i]._id + ', ' + sendData.group);
+				}
+				res.send(200, sendData);
+			});
+		} 
+	});
+});
+
 app.post('/login', function(req, res, next){
 
 	passport.authenticate('local', function(err, user, info) {

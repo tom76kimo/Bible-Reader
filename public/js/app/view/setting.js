@@ -4,13 +4,14 @@ define([
 	'backbone',
 	'model/website',
 	'model/profile',
+	'model/settingProfile',
 	'view/mainMessage',
 	'view/settingAddr',
 	'collection/books',
 	'collection/hasReads',
 	'collection/groups',
 	'text!tpl/setting.html'
-], function($, _, Backbone, Website, Profile, MainMessageView, SettingAddrView, Books, HasReads, Groups, tpl){
+], function($, _, Backbone, Website, Profile, SettingProfile, MainMessageView, SettingAddrView, Books, HasReads, Groups, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -22,10 +23,17 @@ define([
 			var booksFinished = $.Deferred();
 			var groupsFinished = $.Deferred();
 
+
 			user.fetch({
 				success: function(model){
 					userFinished.resolve();
 					//self.$el.html(self.template({user: JSON.stringify(model)}));
+					var sPro = new SettingProfile({userId: user.id});
+					sPro.fetch({
+						success: function(){
+							console.log(sPro);
+						}
+					});
 				},
 				error: function(){
 					userFinished.reject();
