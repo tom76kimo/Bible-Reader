@@ -22,8 +22,8 @@ define([
 			var hasReadsFinished = $.Deferred();
 			var booksFinished = $.Deferred();
 			var groupsFinished = $.Deferred();
-
 			/*
+
 			user.fetch({
 				success: function(model){
 					userFinished.resolve();
