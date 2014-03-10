@@ -13,8 +13,9 @@ define([
 	'view/blog-readBible',
 	'view/dashboard',
 	'view/profile',
+	'view/achievement',
 	'model/website'
-], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, BlogView, DashBoardView, ProfileView, Website){
+], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, BlogView, DashBoardView, ProfileView, AchievementView, Website){
 	return Backbone.Router.extend({
 		initialize: function(){
 			new LoginView();
@@ -60,7 +61,8 @@ define([
 			'statics': 'statics',
 			'blog-readBible': 'blog',
 			'dashboard': 'dashboard',
-			'profile/:id': 'profile'
+			'profile/:id': 'profile',
+			'achievement': 'achievement'
 		},
 		welcome: function(){
 			new MainView().render();
@@ -104,6 +106,12 @@ define([
 		},
 		profile: function(id){
 			new ProfileView({userId: id}).render();
+		},
+		achievement: function(){
+			this.checkAuth(function(){
+				console.log('Good Job!');
+				new AchievementView().render();
+			});
 		}
 	});
 });

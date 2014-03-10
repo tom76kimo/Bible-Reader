@@ -1,6 +1,6 @@
 var database = require('./database');
 var Book = database.Book;
-/*
+
 new Book({name: 'Genesis', cname: '創世記', shortName: 'Gen', amount: 50, order: 1}).save();
 new Book({name: 'Exodus', cname: '出埃及記', shortName: 'Exo', amount: 40, order: 2}).save();
 new Book({name: 'Leviticus', cname: '利未記', shortName: 'Lev', amount: 27, order: 3}).save();
@@ -21,8 +21,8 @@ new Book({name: 'Esther', cname: '以斯帖記', shortName: 'Est', amount: 10, o
 new Book({name: 'Job', cname: '約伯記', shortName: 'Job', amount: 42, order: 18}).save();
 new Book({name: 'Psalms', cname: '詩篇', shortName: 'Psm', amount: 150, order: 19}).save();
 new Book({name: 'Proverbs', cname: '箴言', shortName: 'Pro', amount: 31, order: 20}).save();
-*/
-/*
+
+
 new Book({name: 'Ecclesiastes', cname: '傳道書', shortName: 'Eccl', amount: 12, order: 21}).save();
 new Book({name: 'Song of Solomon', cname: '雅歌', shortName: 'Song', amount: 8, order: 22}).save();
 new Book({name: 'Isaiah', cname: '以賽亞書', shortName: 'Is', amount: 66, order: 23}).save();
@@ -43,8 +43,8 @@ new Book({name: 'Haggai', cname: '哈該書', shortName: 'Hag', amount: 2, order
 new Book({name: 'Zechariah', cname: '撒迦利亞書', shortName: 'Zech', amount: 14, order: 38}).save();
 new Book({name: 'Malachi', cname: '瑪拉基書', shortName: 'Mal', amount: 4, order: 39}).save();
 new Book({name: 'Matthew', cname: '馬太福音', shortName: 'Matt', amount: 28, order: 40}).save();
-*/
-/*
+
+
 new Book({name: 'Mark', cname: '馬可福音', shortName: 'Mak', amount: 16, order: 41}).save();
 new Book({name: 'Luke', cname: '路加福音', shortName: 'Luk', amount: 24, order: 42}).save();
 new Book({name: 'John', cname: '約翰福音', shortName: 'Jhn', amount: 21, order: 43}).save();
@@ -67,7 +67,7 @@ new Book({name: 'James', cname: '雅各書', shortName: 'Jas', amount: 5, order:
 new Book({name: '1 Peter', cname: '彼得前書', shortName: '1Pe', amount: 5, order: 60}).save();
 new Book({name: '2 Peter', cname: '彼得後書', shortName: '2Pe', amount: 3, order: 61}).save();
 new Book({name: '1 John', cname: '約翰壹書', shortName: '1Jn', amount: 5, order: 62}).save();
-*/
+
 new Book({name: '2 John', cname: '約翰貳書', shortName: '2Jn', amount: 1, order: 63}).save();
 new Book({name: '3 John', cname: '約翰參書', shortName: '3Jn', amount: 1, order: 64}).save();
 new Book({name: 'Jude', cname: '猶大書', shortName: 'Jud', amount: 1, order: 65}).save();

@@ -76,6 +76,7 @@ define([
 			this.hasRead.save({
 				error: function(){
 					//make the number unchecked.
+					console.log('fail');
 				}
 			});
 		},

@@ -337,6 +337,13 @@ app.get('/allUser', function(req, res){
 	});
 });
 
+app.get('/achievements', function(req, res){
+	Achievement.find({}, function(err, achievements){
+		if(err) res.send(500);
+		else res.send(200, achievements);
+	});
+});
+
 app.get('/account', ensureAuthenticated, function(req, res){
   res.send({ user: req.user });
 });
