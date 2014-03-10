@@ -8,8 +8,26 @@ var database = require('./database'),
 	Book = database.Book,
 	HasRead = database.HasRead,
 	Profile = database.Profile,
-	Group = database.Group;
+	Group = database.Group,
+	Achievement = database.Achievement;
 var crypto = require('crypto');
+
+
+
+//==== Utility
+Array.prototype.isContain = function(resource){
+	var result = true;
+	for(var i=0; i<resource.length; ++i){
+		var found = false;
+		for(var j=0; j<this.length; ++j){
+			if(resource[i].toString() === this[j].toString())
+				found = true;
+		}
+		result &= found;
+	}
+	return !!result;
+}
+
 
 /*
 var fs = require('fs');
@@ -219,7 +237,6 @@ app.get('/settingProfile/:id', function(req, res){
 					if(groups[i]._id == sendData.group){
 						sendData.group = groups[i].name;
 					}
-						console.log(groups[i]._id + ', ' + sendData.group);
 				}
 				res.send(200, sendData);
 			});
@@ -333,10 +350,14 @@ app.post('/progress', function(req, res){
 
 
 
+/*
+calculates("531682ed21498354179a1d39", function(data){
+	calAchievement(data.badges, function(result){
+		console.log(result);
+	});
+}); */
 
-//calculates("5303252b0f9bcd282765f4ba", function(data){
-//	console.log(data);
-//});
+
 function calculates(userId, callback){
 	//console.log(userId);
 	var output = {};
@@ -350,6 +371,53 @@ function calculates(userId, callback){
 		}
 		callback && callback(output);
 	});
+}
+
+function calAchievement(badges, callback){
+	var badgesOrders;
+	Book.find({}, function(err, books){
+		badgesOrders = getBadgesOrder();
+		if(badgesOrders.length === 0)
+			callback && callback([]);
+		else{
+			Achievement.find({}, function(err, achievements){
+				var achievementResult = [];
+				for(var i=0; i<achievements.length; ++i){
+					var condition = achievements[i].condition.toString().split(',');
+					if(badgesOrders.isContain(condition))
+						achievementResult.push(achievements[i].name);
+				}
+				callback && callback(achievementResult);
+			});
+		}
+		
+		
+		function getBadgesOrder(){
+			var badgesOrders = [];
+			for(var i=0; i<badges.length; ++i){
+				for(var j=0; j<books.length; ++j){
+					if(badges[i] == books[j]._id)
+						badgesOrders.push(books[j].order);
+				}
+			}
+			return badgesOrders;
+		}
+	});
+
+}
+//console.log(arrayInclude([1, 2, 4], [2, 3, 4]));
+
+function arrayInclude(resource, target){
+	var result = true;
+	for(var i=0; i<resource.length; ++i){
+		var found = false;
+		for(var j=0; j<target.length; ++j){
+			if(resource[i] === target[j])
+				found = true;
+		}
+		result &= found;
+	}
+	return !!result;
 }
 
 function ensureAuthenticated(req, res, next) {

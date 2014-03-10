@@ -18,8 +18,12 @@ var Profile = mongoose.model('profile', profileSchema);
 var groupSchema = new mongoose.Schema({name: String, amount: Number, net: String, pastor: String});
 var Group = mongoose.model('group', groupSchema);
 
+var achievementSchema = new mongoose.Schema({name: String, condition: String});
+var Achievement = mongoose.model('achieve', achievementSchema);
+
 exports.User = User;
 exports.Book = Book;
 exports.HasRead = HasRead;
 exports.Profile = Profile;
 exports.Group = Group;
+exports.Achievement = Achievement;
