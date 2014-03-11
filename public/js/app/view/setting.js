@@ -17,7 +17,7 @@ define([
 		template: _.template(tpl),
 		render: function(){
 			var self = this;
-			var user = Website.getUser();
+			var user = this.user = Website.getUser();
 			var sProFinished = $.Deferred();
 			var hasReadsFinished = $.Deferred();
 			var booksFinished = $.Deferred();
@@ -40,7 +40,7 @@ define([
 				}
 			}); */
 
-			var sPro = new SettingProfile({userId: user.id});
+			var sPro = this.sPro = new SettingProfile({userId: user.id});
 			sPro.fetch({
 				success: function(){
 					sProFinished.resolve();
@@ -167,8 +167,17 @@ define([
 			    description = this.$('#description').val(),
 			    group = this.$('#group').val();
 
+			var sProData = {
+				nickname: this.$('#nickname').val(),
+			    email: this.$('#email').val(),
+			    description: this.$('#description').val(),
+			    group: this.$('#group option:selected').html()
+			};
+			
+			this.sPro.set(sProData);
 			this.$('#loadingGif').show();
-			this.profile.save({nickname: nickname, email: email, description: description, group: group}, {
+			var profile = new Profile({userId: this.user.id});
+			profile.save({nickname: nickname, email: email, description: description, group: group}, {
 				success: function(model, response, options){
 					self.$('#loadingGif').hide();
 					self.$('#myModal').modal('hide');
