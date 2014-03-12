@@ -17,18 +17,36 @@
 			</div>
 			
 		</div>
-	  	<% for(var i=0; i<achievements.length; ++i) { %>
-			<div class="achievementBlock  col-sm-5 col-md-5">
-				<div>
-					<div class="row" style="margin: 0px;">
-					<div class="pull-left"><span class="icon-question"></span></div>
-					<div class="pull-left" style="margin-left: 5px; width: 270px;">
-						<div style="font-size: 24px; font-weight: bold;"><%- achievements[i].name%></div>
-						<div><%- achievements[i].description%></div>
+	  	<% 	for(var i=0; i<achievements.length; ++i) { %>
+	  	<% 		if(userAchievements.indexOf(achievements[i].name) != -1) { %>
+	  				<div class="achievementBlock actived col-sm-5 col-md-5">
+	  					<div>
+							<div class="row" style="margin: 0px;">
+								<div class="pull-left" style="margin-left: 5px; margin-right: 5px;"><span class="<%-achievements[i].icon%>"></span></div>
+								<div class="pull-left" style="margin-left: 5px; width: 260px;">
+									<div style="font-size: 24px; font-weight: bold;"><%- achievements[i].name%></div>
+									<div><%- achievements[i].description%></div>
+								</div>
+							</div>
+							<div class="ribbon-wrapper-green">
+								<div class="ribbon-green">已解開</div>
+							</div>
+						</div>
 					</div>
+	  	<% 		}else { %>
+	  				<div class="achievementBlock col-sm-5 col-md-5">
+	  					<div>
+							<div class="row" style="margin: 0px;">
+								<div class="pull-left" style="margin-left: 5px; margin-right: 5px;"><span class="icon-question"></span></div>
+								<div class="pull-left" style="margin-left: 5px; width: 260px;">
+									<div style="font-size: 24px; font-weight: bold;"><%- achievements[i].name%></div>
+									<div><%- achievements[i].description%></div>
+								</div>
+							</div>
+						</div>
 					</div>
-				</div>
-			</div>
+	  	<% 		 }%>
+			
 		<% } %>
   	</div>
   		

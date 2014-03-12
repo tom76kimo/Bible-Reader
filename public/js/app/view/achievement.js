@@ -16,7 +16,9 @@ define([
 			var self = this;
 			this.achievements.fetch({
 				success: function(collection){
-					self.$el.html(self.template({achievements: JSON.stringify(collection)}));
+					$.get('/userAchievements', {}, function(data){
+						self.$el.html(self.template({achievements: JSON.stringify(collection), userAchievements: data}));
+					});
 				}
 			});
 			

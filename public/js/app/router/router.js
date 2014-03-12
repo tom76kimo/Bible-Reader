@@ -102,14 +102,15 @@ define([
 			new BlogView().render();
 		},
 		dashboard: function(){
-			new DashBoardView().render();
+			this.checkAuth(function(){
+				new DashBoardView().render();
+			});
 		},
 		profile: function(id){
 			new ProfileView({userId: id}).render();
 		},
 		achievement: function(){
 			this.checkAuth(function(){
-				console.log('Good Job!');
 				new AchievementView().render();
 			});
 		}

@@ -117,7 +117,6 @@ function loadUser(req, res, next){
 		next();
 }
 
-var name = 'Tom';
 function checkAdmin(req, res, next){
 	next();
 }
@@ -344,6 +343,20 @@ app.get('/achievements', function(req, res){
 	});
 });
 
+app.get('/userAchievements', function(req, res){
+	if(!req.user){
+		res.send(500);
+		return;
+	}
+	
+	calculates(req.user.id, function(data){
+		calAchievement(data, function(result){
+			res.send(200, result);
+		});
+	});
+		
+});
+
 app.get('/account', ensureAuthenticated, function(req, res){
   res.send({ user: req.user });
 });
@@ -380,8 +393,9 @@ function calculates(userId, callback){
 	});
 }
 
-function calAchievement(badges, callback){
+function calAchievement(data, callback){
 	var badgesOrders;
+	var badges = data.badges;
 	Book.find({}, function(err, books){
 		badgesOrders = getBadgesOrder();
 		if(badgesOrders.length === 0)
@@ -394,6 +408,9 @@ function calAchievement(badges, callback){
 					if(badgesOrders.isContain(condition))
 						achievementResult.push(achievements[i].name);
 				}
+
+				isOneChapter(achievementResult);
+				isTenChapter(achievementResult);
 				callback && callback(achievementResult);
 			});
 		}
@@ -408,6 +425,16 @@ function calAchievement(badges, callback){
 				}
 			}
 			return badgesOrders;
+		}
+
+		function isOneChapter(result){
+			if(data.totalReadChapter >= 1)
+				result.push('好的開始！');
+		}
+
+		function isTenChapter(result){
+			if(badges.length >= 10)
+				result.push('書卷獎');
 		}
 	});
 
