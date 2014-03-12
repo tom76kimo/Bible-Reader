@@ -396,21 +396,23 @@ function calculates(userId, callback){
 function calAchievement(data, callback){
 	var badgesOrders;
 	var badges = data.badges;
+	var achievementResult = [];
 	Book.find({}, function(err, books){
 		badgesOrders = getBadgesOrder();
-		if(badgesOrders.length === 0)
-			callback && callback([]);
+		if(badgesOrders.length === 0){
+			nonNumberAchive();
+			callback && callback(achievementResult);
+		}
 		else{
 			Achievement.find({}, function(err, achievements){
-				var achievementResult = [];
+				
 				for(var i=0; i<achievements.length; ++i){
-					var condition = achievements[i].condition.toString().split(',');
+					var condition = achievements[i].condition.toString().split(',') || [];
 					if(badgesOrders.isContain(condition))
 						achievementResult.push(achievements[i].name);
 				}
 
-				isOneChapter(achievementResult);
-				isTenChapter(achievementResult);
+				nonNumberAchive();
 				callback && callback(achievementResult);
 			});
 		}
@@ -425,6 +427,11 @@ function calAchievement(data, callback){
 				}
 			}
 			return badgesOrders;
+		}
+
+		function nonNumberAchive(){
+			isOneChapter(achievementResult);
+			isTenChapter(achievementResult);
 		}
 
 		function isOneChapter(result){
