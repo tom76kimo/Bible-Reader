@@ -13,7 +13,6 @@ define([
 
 		},
 		render: function(){
-			console.log('re');
 			var self = this;
 			this.achievements.fetch({
 				success: function(collection){

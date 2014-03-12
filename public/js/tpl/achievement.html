@@ -1,20 +1,37 @@
 <% var achievements = JSON.parse(achievements); %>
 <div class="jumbotron" >
   <div class="container" >
-  	<% for(var i=0; i<achievements.length; ++i) { %>
-		<div class="achievementBlock">
+  	<div class="row">
+  		<div class="achievementBlock actived col-sm-5 col-md-5">
 			<div>
-				<div class="row">
-					<div class="col-md-4">
-						<span class="icon-spinner3"></span>
+				<div class="row" style="margin: 0px;">
+				<div class="pull-left"><span class="icon-accessibility"></span></div>
+				<div class="pull-left" style="margin-left: 5px;">
+					<div style="font-size: 24px; font-weight: bold;">新手上路</div>
+					<div>登入至少一次</div>
+				</div>
+				</div>
+				<div class="ribbon-wrapper-green">
+					<div class="ribbon-green">已解開</div>
+				</div>
+			</div>
+			
+		</div>
+	  	<% for(var i=0; i<achievements.length; ++i) { %>
+			<div class="achievementBlock  col-sm-5 col-md-5">
+				<div>
+					<div class="row" style="margin: 0px;">
+					<div class="pull-left"><span class="icon-question"></span></div>
+					<div class="pull-left" style="margin-left: 5px; width: 270px;">
+						<div style="font-size: 24px; font-weight: bold;"><%- achievements[i].name%></div>
+						<div><%- achievements[i].description%></div>
 					</div>
-					<div class="col-md-8">
-						<h3><%- achievements[i].name%></h3>
 					</div>
 				</div>
 			</div>
-		</div>
-	<% } %>
+		<% } %>
+  	</div>
+  		
 	
   </div>
 </div>
