@@ -1,6 +1,6 @@
-<td>#</td>
-<td><a href="#profile/<%=userId%>"><%=username%></a></td>
-<td>
+<td width="5%">#</td>
+<td width="15%"><a href="#profile/<%=userId%>"><%=username%></a></td>
+<td width="30%">
 	<div class="progress" style="margin-bottom: 0px;">
 	  <div class="progress-bar" role="progressbar" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=percentage%>%;">
 	    <span class="sr-only"><%=percentage%>% Complete</span>
@@ -8,7 +8,7 @@
 	</div>
 	<div style="float: left;"><%=percentage%>%</div>
 </td>
-<td>
+<td width="50%">
 	<% for(var i=0; i<badges.length; ++i){ %>
 		<span class="badge"><%=badges[i]%></span>
 	<% } %>
