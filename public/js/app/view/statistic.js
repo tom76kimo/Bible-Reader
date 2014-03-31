@@ -54,10 +54,12 @@ define([
 					var tr = $('<tr>').appendTo('#panel');
 					new StatisticPersonView({el: tr, model: self.users.models[i], books: self.books}).render();
 				}*/
-				for(var i=0; i<self.staData.length; ++i){
-					var tr = $('<tr>').appendTo('#panel');
-					new StatisticPersonView({el: tr, model: self.staData[i], books: self.books}).render();
-				}
+				setTimeout(function(){
+					for(var i=0; i<self.staData.length; ++i){
+						var tr = $('<tr>').appendTo('#panel');
+						new StatisticPersonView({el: tr, model: self.staData[i], books: self.books}).render();
+					}
+				}, 0);
 			});	
 		}
 	});
