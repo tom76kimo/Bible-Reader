@@ -27,7 +27,7 @@ requirejs.config({
 	}
 });
 
-define(['jquery', 'underscore', 'backbone', 'bootstrap', 'router/router', 'lan/tw'], function($, _, Backbone, bootstrap, Router){
+require(['jquery', 'underscore', 'backbone', 'bootstrap', 'router/router', 'lan/tw'], function($, _, Backbone, bootstrap, Router){
 	
 	new Router();
 	Backbone.history.start();
