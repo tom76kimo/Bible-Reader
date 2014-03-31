@@ -10,14 +10,19 @@ define([
 			this.books = options.books;
 		},
 		render: function(){
-			var user = this.model,
+			var staData = this.model,
 			    self = this;
 			this.$el.html('<td><img src="/assets/images/loading.gif" width="30"/></td>');
+			
+			/*
 			$.post('/progress', {userId: user.get('_id')}, function(data){
 				var percentage = calPercentage(data.totalReadChapter);
 				var badges = getBadgesName(data.badges);
 				self.$el.html(self.template({percentage: percentage, username: user.get('username'), userId: user.get('_id'), badges: badges}));
-			}, 'json');
+			}, 'json');*/
+			var percentage = calPercentage(staData.totalReadChapter);
+			var badges = getBadgesName(staData.badges);
+			self.$el.html(self.template({percentage: percentage, username: staData.username, userId: staData._id, badges: badges}));
 
 			function calPercentage(value){
 				var percentage = Math.floor((value / 1189) * 10000);

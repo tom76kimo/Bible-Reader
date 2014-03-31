@@ -11,6 +11,8 @@ var database = require('./database'),
 	Group = database.Group,
 	Achievement = database.Achievement;
 var crypto = require('crypto');
+var Promise = require('es6-promise').Promise;
+var _ = require('underscore');
 
 
 
@@ -324,6 +326,30 @@ app.get('/users/:userId/admin', [loadUser, checkAdmin], function(req, res){
 app.get('/statistic', function(req, res){
 	User.find({}, function(err, user){
     	res.send(user);
+	});
+});
+
+var statisticDataPromises = [];
+app.get('/statisticData', function(req, res){
+	statisticDataPromises = [];
+	User.find({}, function(err, user){
+		for(var i=0; i<user.length; ++i){
+			(function(i){
+				user[i].password = null
+				var promise = new Promise(function(resolve, reject){
+					calculates(user[i]._id, function(output){
+						var outputObj = {username: user[i].username, _id: user[i]._id};
+						outputObj = _.extend(outputObj, output);
+						resolve(outputObj);
+					});
+				});
+				statisticDataPromises.push(promise);
+			})(i);
+		}
+		Promise.all(statisticDataPromises).then(function(result){
+			res.send(result);
+		});
+    	
 	});
 });
 
