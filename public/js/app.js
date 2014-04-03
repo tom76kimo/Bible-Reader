@@ -23,6 +23,11 @@ requirejs.config({
 	  'backbone': {
 	  	deps: ['jquery', 'underscore'],
 	  	exports: 'Backbone'
+	  },
+	  'markdown': {},
+	  'to-markdown': {},
+	  'bootstrap-markdown': {
+	  	deps: ['jquery', 'bootstrap']
 	  }
 	}
 });

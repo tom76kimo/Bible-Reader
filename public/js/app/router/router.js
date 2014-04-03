@@ -10,12 +10,13 @@ define([
 	'view/setting',
 	'view/read',
 	'view/statistic',
-	'view/blog-readBible',
+	'view/blog/main',
+	'view/blog/new',
 	'view/dashboard',
 	'view/profile',
 	'view/achievement',
 	'model/website'
-], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, BlogView, DashBoardView, ProfileView, AchievementView, Website){
+], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, BlogView, BlogNewView, DashBoardView, ProfileView, AchievementView, Website){
 	return Backbone.Router.extend({
 		initialize: function(){
 			new LoginView();
@@ -59,7 +60,8 @@ define([
 			'setting': 'setting',
 			'read': 'read',
 			'statics': 'statics',
-			'blog-readBible': 'blog',
+			'blog/main': 'blog',
+			'blog/new': 'blogNew',
 			'dashboard': 'dashboard',
 			'profile/:id': 'profile',
 			'achievement': 'achievement'
@@ -100,6 +102,9 @@ define([
 		},
 		blog: function(){
 			new BlogView().render();
+		},
+		blogNew: function(){
+			new BlogNewView().render();
 		},
 		dashboard: function(){
 			this.checkAuth(function(){
