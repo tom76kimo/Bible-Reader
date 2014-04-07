@@ -9,7 +9,8 @@ var database = require('./database'),
 	HasRead = database.HasRead,
 	Profile = database.Profile,
 	Group = database.Group,
-	Achievement = database.Achievement;
+	Achievement = database.Achievement,
+	Article = database.Article;
 var crypto = require('crypto');
 var Promise = require('es6-promise').Promise;
 var _ = require('underscore');
@@ -174,6 +175,89 @@ app.put('/hasread', function(req, res){
 		res.send(200);
 	});
 	//res.send(200);
+});
+
+app.post('/article', function(req, res){
+	var article = new Article(req.body);
+	article.save(function(err, model){
+		if(err){
+			res.send(500);
+			return;
+		}
+		if(model){
+			res.send(200, model);
+			return;
+		}
+		else{
+			res.send(500);
+			return;
+		}
+
+	});
+});
+
+app.put('/article/:id', function(req, res){
+	Article.update({_id: req.params.id}, req.body, function(err, numberAffected, raw){
+		if(err){
+			res.send(500);
+			return;
+		}
+		res.send(200, {_id: req.params.id});
+	});
+});
+
+app.get('/article/:id', function(req, res){
+	Article.findById(req.params.id, function(err, article){
+		if(err){
+			res.send(500);
+			return;
+		}
+		User.findById(article.userId, function(err, user){
+			if(err){
+				res.send(500);
+				return;
+			}
+			var output = article.toObject();
+			output.username = user.username;
+			res.send(200, output);
+		});
+	});
+});
+
+var articlesPromises = [];
+app.get('/articles', function(req, res){
+	articlesPromises.length = 0;
+	Article.find({}, function(err, articles){
+		if(err){
+			res.send(500);
+			return;
+		}
+		for(var i=0; i<articles.length; ++i){
+			(function(i){
+				var promise = new Promise(function(resolve, reject){
+					User.findById(articles[i].userId, function(err, user){
+						if(err){
+							reject();
+							return;
+						}
+
+						if(user){
+							var outputObj = articles[i].toObject();
+							outputObj.username = user.username;
+							resolve(outputObj);
+						}
+						else{
+							reject();
+						}
+					});
+				});
+				articlesPromises.push(promise);
+			})(i);
+		}
+		Promise.all(articlesPromises).then(function(result){
+			res.send(200, result);
+		});
+	});
 });
 
 app.post('/getProfile', function(req, res){

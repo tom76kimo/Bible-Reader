@@ -2,7 +2,7 @@ define([
 	'backbone'
 ], function(Backbone){
 	return Backbone.Model.extend({
-		idAttribute: "_id",
+		idAttribute: '_id',
 		urlRoot: '/article',
 		defaults: {
 			title: undefined,

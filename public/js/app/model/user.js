@@ -8,7 +8,8 @@ define([
 			username: undefined,
 			password: undefined,
 			nickname: undefined,
-			description: undefined
+			description: undefined,
+			thumbnailUrl: undefined
 		}
 	});
 });

@@ -1,0 +1,6 @@
+<% var article = JSON.parse(data); %>
+<h2 class="blog-post-title"><a href="/#blog/article/<%-article._id%>"><%-article.title%><!--讀聖經的好處--></a></h2>
+<p class="blog-post-meta"><%-writeTime%> by <a href="/#profile/<%-article.userId%>"><%-article.username%></a></p>
+
+<%=content%>
+<hr/>

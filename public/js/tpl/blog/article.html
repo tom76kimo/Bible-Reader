@@ -1,0 +1,13 @@
+<% var article = JSON.parse(data); %>
+<!--div class="jumbotron"  style="width: 80%; margin-left: auto; margin-right: auto;"-->
+<div class="articleMain" style="width: 100%; background: url('/assets/images/sprinkles.png');">
+	<div class="container" style="">
+		<h2 class="blog-post-title"><%-article.title%></h2>
+		<p class="blog-post-meta"><%-writeTime%> by <a href="/#profile/<%-article.userId%>"><%-article.username%></a></p>
+		<div class="articlePager">
+			<%=content%>
+		</div>
+		
+	</div>
+</div>
+<!--/div-->

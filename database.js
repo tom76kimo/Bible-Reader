@@ -3,7 +3,7 @@ mongoose.connect('mongodb://localhost/bible');
 var db = mongoose.connection;
 
 db.on('error', console.error.bind(console, 'connection error:'));
-var userSchema = new mongoose.Schema({username: String, password: String, nickname: String, description: String});
+var userSchema = new mongoose.Schema({username: String, password: String, nickname: String, description: String, thumbnailUrl: String});
 var User = mongoose.model('Users', userSchema);
 
 var bookSchema = new mongoose.Schema({name: String, cname: String, shortName: String, amount: Number, order: Number});
@@ -21,9 +21,13 @@ var Group = mongoose.model('group', groupSchema);
 var achievementSchema = new mongoose.Schema({icon: String, name: String, condition: String, description: String, order: Number});
 var Achievement = mongoose.model('achieve', achievementSchema);
 
+var articleSchema = new mongoose.Schema({title: String, content: String, lastUpdate: String, writeTime: String, userId: String, messageId: String});
+var Article = mongoose.model('article', articleSchema);
+
 exports.User = User;
 exports.Book = Book;
 exports.HasRead = HasRead;
 exports.Profile = Profile;
 exports.Group = Group;
 exports.Achievement = Achievement;
+exports.Article = Article;
