@@ -7,8 +7,9 @@ define([
 	'bootstrap-markdown',
 	'model/article',
 	'model/website',
+	'view/mainMessage',
 	'text!tpl/blog/new.html'
-], function($, _, Backbone, Markdown, to_Markdown, BootstrapMarkdown, Article, website, tpl){
+], function($, _, Backbone, Markdown, to_Markdown, BootstrapMarkdown, Article, website, MainMessageView, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -24,9 +25,11 @@ define([
 
 					new Article().save({title: title, content: e.getContent(), lastUpdate: nowTime, writeTime: nowTime, userId: user.id}, {
 						success: function(article){
+							new MainMessageView().success().render('新增文章成功。');
 							website.navigate('blog/article/' + article.id, {trigger: true, replace: true});
 						},
 						error: function(data){
+							new MainMessageView().danger().render('嗚，似乎哪裡出現了問題。');
 							console.log(data);
 						}
 					});
