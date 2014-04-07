@@ -4,6 +4,9 @@
 	<div class="container" style="">
 		<h2 class="blog-post-title"><%-article.title%></h2>
 		<p class="blog-post-meta"><%-writeTime%> by <a href="/#profile/<%-article.userId%>"><%-article.username%></a></p>
+		<div style="height: 20px;">
+			<div style="float: right;"><a href="#blog/main"><span class="glyphicon glyphicon-share-alt"></span>回到Blog首頁</a></div>
+		</div>
 		<div class="articlePager">
 			<%=content%>
 		</div>
