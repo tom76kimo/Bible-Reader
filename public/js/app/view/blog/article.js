@@ -3,8 +3,9 @@ define([
 	'underscore',
 	'backbone',
 	'model/article',
+	'model/website',
 	'text!tpl/blog/article.html'
-], function($, _, Backbone, Article, tpl){
+], function($, _, Backbone, Article, website, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -17,20 +18,33 @@ define([
 			this.article.fetch({
 				success: function(article){
 					var content = markdown.toHTML(article.get('content'));
-					var writeTime = self.getNowTime(article.get('writeTime'));
-					self.$el.html(self.template({data: JSON.stringify(article), content: content, writeTime: writeTime}));
+					var writeTime = self.toDate(article.get('writeTime'));
+					var lastUpdate = self.toDate(article.get('lastUpdate'));
+					self.$el.html(self.template({data: JSON.stringify(article), content: content, writeTime: writeTime, lastUpdate: lastUpdate}));
 					this.$('.articleMain').height(windowHeight-50);
+					var me;
+					website.getMe(function(model){
+						me = model;
+						if(article.get('userId') === me.id){
+							this.$('#editArticle').show(0);
+						}
+					});
+					if(article.get('writeTime') !== article.get('lastUpdate'))
+						self.$('.lastUpdate').show(300);
 				}
 			});
 			
 		},
 
-		getNowTime: function(timestamp){
+		toDate: function(timestamp){
 			var timestamp = parseInt(timestamp);
 			var today = new Date(timestamp),
 				dd = today.getDate(),
 				mm = today.getMonth()+1,
-				yyyy = today.getFullYear();
+				yyyy = today.getFullYear(),
+				hh = today.getHours(),
+				mmm = today.getMinutes(),
+				ss = today.getSeconds();
 
 			switch(mm){
 				case 1: 
@@ -82,7 +96,13 @@ define([
 				dd += 'rd';
 			else
 				dd += 'th';
-			return mm + ', ' + dd + ', ' + yyyy;
+
+			if(mmm < 10)
+				mmm = '0' + mmm;
+
+			if(ss < 10)
+				ss = '0' + ss;
+			return mm + ', ' + dd + ', ' + yyyy + ' ' + hh + ':' + mmm + ':' + ss;
 		}
 	});
 });

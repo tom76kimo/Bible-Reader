@@ -18,6 +18,22 @@ define([
 		clearUser: function(){
 			this.user = null;
 		},
+		getMe: function(callback){
+			var self = this;
+			if(this.user)
+				callback && callback(this.user);
+			else{
+				$.post('/logged', function(data){
+					if(data.status === 1){
+						var user = new User(data.user);
+						self.setUser(user);
+						callback && callback(user);
+					}
+					else
+						callback && callback('error');
+				});
+			}
+		},
 		getBooks: function(callback){
 			if(!this.books){
 				var self = this;

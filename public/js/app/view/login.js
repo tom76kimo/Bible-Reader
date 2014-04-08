@@ -40,6 +40,10 @@ define([
 			});*/
 			$.post('/logged', function(data){
 				if(data.status === 1){
+					var user = new User(data.user);
+					self.loggedRender(user.get('username'));
+					Website.setUser(user);
+					/*
 					var user = new User({_id: data.id});
 					user.fetch({
 						success: function(model, res, options){
@@ -49,7 +53,7 @@ define([
 						error: function(){
 							self.render();
 						}
-					});
+					});*/
 				}
 				else
 					self.render();

@@ -126,7 +126,7 @@ function checkAdmin(req, res, next){
 
 app.post('/logged', function(req, res){
 	if(req.user)
-		res.send(200, {status: 1, id: req.user._id});
+		res.send(200, {status: 1, user: req.user});
 	else
 		res.send(200, {status: 0});
 });
@@ -197,7 +197,12 @@ app.post('/article', function(req, res){
 });
 
 app.put('/article/:id', function(req, res){
-	Article.update({_id: req.params.id}, req.body, function(err, numberAffected, raw){
+	var article = {
+		title: req.body.title,
+		content: req.body.content,
+		lastUpdate: new Date().getTime()
+	};
+	Article.update({_id: req.params.id}, article, function(err, numberAffected, raw){
 		if(err){
 			res.send(500);
 			return;

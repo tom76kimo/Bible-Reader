@@ -6,11 +6,12 @@
 		<p class="blog-post-meta"><%-writeTime%> by <a href="/#profile/<%-article.userId%>"><%-article.username%></a></p>
 		<div style="height: 20px;">
 			<div style="float: right;"><a href="#blog/main"><span class="glyphicon glyphicon-share-alt"></span>回到Blog首頁</a></div>
+			<div id="editArticle" style="float: right; margin-right: 10px; display: none;"><a href="#blog/edit/<%-article._id%>"><span class="glyphicon glyphicon-cog"></span>編輯文章</a></div>
 		</div>
 		<div class="articlePager">
 			<%=content%>
 		</div>
-		
+		<div class="lastUpdate" style="display: none;">上次更新： <%-lastUpdate%></div>
 	</div>
 </div>
 <!--/div-->
