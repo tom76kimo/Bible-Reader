@@ -59,6 +59,7 @@ define([
 						var tr = $('<tr>').appendTo('#panel');
 						new StatisticPersonView({el: tr, model: self.staData[i], books: self.books}).render();
 					}
+					self.$('.panel-group').addClass('animated fadeInDown');
 				}, 0);
 			});	
 		}

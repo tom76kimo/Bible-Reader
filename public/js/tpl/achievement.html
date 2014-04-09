@@ -2,7 +2,7 @@
 <div class="jumbotron" >
   <div class="container" >
   	<div class="row">
-  		<div class="achievementBlock actived col-sm-5 col-md-5">
+  		<div class="achievementBlock actived col-sm-5 col-md-5 animated fadeInDown">
 			<div>
 				<div class="row" style="margin: 0px;">
 				<div class="pull-left"><span class="icon-accessibility"></span></div>
@@ -19,7 +19,7 @@
 		</div>
 	  	<% 	for(var i=0; i<achievements.length; ++i) { %>
 	  	<% 		if(userAchievements.indexOf(achievements[i].name) != -1) { %>
-	  				<div class="achievementBlock actived col-sm-5 col-md-5">
+	  				<div class="achievementBlock actived col-sm-5 col-md-5 animated fadeInDown">
 	  					<div>
 							<div class="row" style="margin: 0px;">
 								<div class="pull-left" style="margin-left: 5px; margin-right: 5px;"><span class="<%-achievements[i].icon%>"></span></div>
@@ -34,7 +34,7 @@
 						</div>
 					</div>
 	  	<% 		}else { %>
-	  				<div class="achievementBlock col-sm-5 col-md-5">
+	  				<div class="achievementBlock col-sm-5 col-md-5 animated fadeInDown">
 	  					<div>
 							<div class="row" style="margin: 0px;">
 								<div class="pull-left" style="margin-left: 5px; margin-right: 5px;"><span class="icon-question"></span></div>
