@@ -35,7 +35,7 @@ define([
 			$.post('/logged', function(data){
 				if(data.status === 1){
 					if(!Website.getUser()){
-						var user = new User({_id: data.id});
+						var user = new User({_id: data.user._id});
 						user.fetch({
 							success: function(model, res, options){
 								Website.setUser(model);
