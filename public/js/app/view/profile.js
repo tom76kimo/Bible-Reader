@@ -26,6 +26,17 @@ define([
 								if(group)
 									groupName = group.get('name');
 								self.$el.html(self.template({user: JSON.stringify(user), profile: JSON.stringify(profile), groupName: groupName}));
+								if(profile.get('FBID') !== '' && profile.get('FBID') !== undefined){
+									self.$('#thumbnailPhoto').attr('src', 'http://graph.facebook.com/' + profile.get('FBID') + '/picture?width=140&height=140');
+								}
+								else
+									self.$('#thumbnailPhoto').attr('src', 'assets/images/man.png');
+								self.$('#thumbnailPhoto').on('load', function(){
+									$(this).addClass('animate fadeInDown');
+								});
+								self.$('#thumbnailPhoto').on('error', function(){
+									$(this).attr('src', 'assets/images/man.png');
+								});
 							}
 						});
 					});

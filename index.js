@@ -293,8 +293,7 @@ app.put('/profile/:id', function(req, res){
 		description: req.body.description,
 		group: req.body.group
 	};
-	//console.log(req.params.id);
-	Profile.update({userId: req.params.id}, data, function(err, numberAffected, raw){
+	Profile.update({userId: req.params.id}, req.body, function(err, numberAffected, raw){
 		if(err){
 			res.send(500);
 		}
@@ -319,6 +318,7 @@ app.get('/settingProfile/:id', function(req, res){
 			sendData.nickname = profile.nickname || '';
 			sendData.userId = profile.userId || '';
 			sendData.username = req.user.username;
+			sendData.FBID = profile.FBID || '';
 
 			Group.find({}, function(err, groups){
 				if(err) res.send(404);

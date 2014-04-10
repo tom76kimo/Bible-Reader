@@ -108,3 +108,18 @@
 	-moz-box-shadow: 5px 5px 21px 0px rgba(0,0,0,0.75);
 	box-shadow: 5px 5px 21px 0px rgba(0,0,0,0.75);
 }
+
+.thumbnailCog {
+	position: absolute; 
+	cursor: pointer;
+	right: 6px; 
+	top: 3px; 
+	color: #8ef; 
+	border: 1px solid #aaa; 
+	padding: 3px;
+	display: none;
+}
+
+.thumbnailCog:hover {
+	border: 1px solid #555;
+}

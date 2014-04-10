@@ -106,6 +106,19 @@ define([
 				}, 'json');
 				*/
 				self.$el.html(self.template({profile: JSON.stringify(sPro), percentage: percentage, badges: badges}));
+				self.$('.thumbnailCog').tooltip();
+				if(sPro.get('FBID') !== ''){
+					self.$('#thumbnailPhoto').attr('src', 'http://graph.facebook.com/' + sPro.get('FBID') + '/picture?width=140&height=140');
+				}
+				else
+					self.$('#thumbnailPhoto').attr('src', 'assets/images/man.png');
+				self.$('#thumbnailPhoto').on('load', function(){
+					$(this).addClass('animate fadeInDown');
+				});
+				self.$('#thumbnailPhoto').on('error', function(){
+					new MainMessageView().warning().render('無法以您檔案裡的Facebook ID正確抓取圖片');
+					$(this).attr('src', 'assets/images/man.png');
+				});
 				var group = sPro.get('group');
 				for(var i=0; i<groups.length; ++i){
 					if(groups.models[i].get('name') === group){
@@ -117,6 +130,12 @@ define([
 				}
 
 				self.addressView = new SettingAddrView({el: self.$('#address'), user: user, profile: sPro, groups: groups}).render();
+
+				self.$('.cogCover').mouseenter(function(event) {
+					self.$('.thumbnailCog').show();
+				}).mouseleave(function(event) {
+					self.$('.thumbnailCog').hide();
+				});;
 
 				/*
 				self.profile = new Profile({userId: user.id});
@@ -158,7 +177,8 @@ define([
 			}
 		},
 		events: {
-			'click #saveBtn': 'saveProfile'
+			'click #saveBtn': 'saveProfile',
+			'click #saveFbBtn': 'saveFBID'
 		},
 		saveProfile: function(){
 			var self = this;
@@ -190,6 +210,22 @@ define([
 					new MainMessageView().warning().render('Profile Save Failed');
 				}
 			});
+		},
+		saveFBID: function(){
+			var id = this.$('input[name=thumbnailURL]').val();
+			var profile = new Profile({userId: this.user.id});
+			profile.save({FBID: id}, {
+				success: function(){
+					new MainMessageView().success().render('FB ID儲存成功。');
+					self.$('#thumbnailModal').modal('hide');
+					self.$('#thumbnailPhoto').attr('src', 'http://graph.facebook.com/' + id + '/picture?width=140&height=140');
+				},
+				error: function(){
+					new MainMessageView().warning().render('嗚，似乎哪裡出了問題。');
+					self.$('#thumbnailModal').modal('hide');
+				}
+			});
+
 		}
 	});
 });
