@@ -172,7 +172,7 @@ app.put('/hasread', function(req, res){
 	HasRead.update({_id: req.body._id}, data, function(err, numberAffected, raw){
 		if(err)
 			console.log(err);
-		res.send(200);
+		res.send(200, {_id: req.body._id});
 	});
 	//res.send(200);
 });

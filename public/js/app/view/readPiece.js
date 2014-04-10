@@ -12,19 +12,13 @@ define([
 		},
 		render: function(){
 			var self = this;
-			var readChapterArray = this.getReadChapterArray();
+			//var readChapterArray = this.getReadChapterArray();
 			this.$el.html(this.template({book: JSON.stringify(this.model)}));
-			for(var i=0; i<this.model.get('amount'); ++i){
-				//var label = this.$('.btn-group').append('<label class="btn btn-primary"><input type="checkbox">' + (i+1) + '</label>');
-				var label;
-				if(readChapterArray.indexOf((i+1).toString()) > -1)
-					label = $('<label class="btn btn-primary active"><input type="checkbox" checked="checked">' + (i+1) + '</label>').appendTo(this.$('.btn-group'));
-				else
-					label = $('<label class="btn btn-primary"><input type="checkbox">' + (i+1) + '</label>').appendTo(this.$('.btn-group'));
-				label.data('number', (i+1));
-				//console.log(jQuery.data(label, 'number'));
-			}
+			this.populateBtnGroup();
 
+			this.$('#readAll').tooltip({container: 'body'});
+
+			this.$('.panel').off();
 			this.$('.panel').on('show.bs.collapse', function(){
 				self.$('span').removeClass('glyphicon-chevron-right');
 				self.$('span').addClass('glyphicon-chevron-down');
@@ -35,8 +29,25 @@ define([
 				self.$('span').addClass('glyphicon-chevron-right');
 			});
 		},
+
+		populateBtnGroup: function(){
+			var self = this;
+			var readChapterArray = this.getReadChapterArray();
+			this.$('.btn-group').empty();
+			for(var i=0; i<this.model.get('amount'); ++i){
+				//var label = this.$('.btn-group').append('<label class="btn btn-primary"><input type="checkbox">' + (i+1) + '</label>');
+				var label;
+				if(readChapterArray.indexOf((i+1).toString()) > -1)
+					label = $('<label class="btn btn-primary active"><input type="checkbox" checked="checked">' + (i+1) + '</label>').appendTo(this.$('.btn-group'));
+				else
+					label = $('<label class="btn btn-primary"><input type="checkbox">' + (i+1) + '</label>').appendTo(this.$('.btn-group'));
+				label.data('number', (i+1));
+				//console.log(jQuery.data(label, 'number'));
+			}
+		},
 		events: {
-			'click label': 'choose'
+			'click label': 'choose',
+			'click #readAll': 'readAll'
 		},
 		choose: function(e){
 			var number = $(e.target).data('number').toString();
@@ -52,12 +63,11 @@ define([
 			var readChapterArray = readChapter.split(',');
 			readChapterArray.push(number);
 			readChapterArray = _.compact(readChapterArray);
-			readChapterArray = _.sortBy(readChapterArray, function(num){ return Math.sin(parseInt(num)); });
+			readChapterArray = _.sortBy(readChapterArray, function(num){ return parseInt(num); });
 			readChapterArray = _.uniq(readChapterArray, true);
-			//console.log(readChapterArray);
 			readChapter = readChapterArray.join(',');
-			this.hasRead.set({readChapter: readChapter, amount: (readAmount+1)});
-			this.hasRead.save({
+			//this.hasRead.set({readChapter: readChapter, amount: (readAmount+1)});
+			this.hasRead.save({readChapter: readChapter, amount: (readAmount+1)}, {
 				error: function(){
 					//make the number unchecked.
 				}
@@ -83,6 +93,22 @@ define([
 		getReadChapterArray: function(){
 			var readChapterArray = this.hasRead.get('readChapter').split(',');
 			return _.compact(readChapterArray);
+		},
+
+		readAll: function(){
+			var chapterAmount = this.model.get('amount'),
+			    rangeArray = _.range(1, chapterAmount+1),
+			    hasReadString = rangeArray.join(','),
+			    self = this;
+			this.hasRead.save({readChapter: hasReadString, amount: chapterAmount}, {
+				success: function(){
+					self.populateBtnGroup();
+				},
+				error: function(){
+					//make the number unchecked.
+					console.log('not ok');
+				}
+			});
 		}
 	});
 });
