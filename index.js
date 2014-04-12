@@ -504,7 +504,24 @@ function calculates(userId, callback){
 			if(hasReads[i].amount === hasReads[i].totalAmount)
 				output.badges.push(hasReads[i].bookId);
 		}
-		callback && callback(output);
+		Profile.find({userId: userId}, function(err, profile){
+			if(err){
+				output.FBID = null;
+			}
+
+			if(profile.length !== 0){
+				profile = profile[0].toObject();
+				if(profile.FBID === undefined)
+					output.FBID = null;
+				else
+				    output.FBID = profile.FBID;
+			}
+			else{
+				output.FBID = null;
+			}
+			
+			callback && callback(output);
+		});
 	});
 }
 
