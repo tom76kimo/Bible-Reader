@@ -22,7 +22,7 @@ define([
 			}, 'json');*/
 			var percentage = calPercentage(staData.totalReadChapter);
 			var badges = getBadgesName(staData.badges);
-			var thumbnailURL = (this.model.FBID === null)? 'assets/images/man.png': 'http://graph.facebook.com/' + this.model.FBID + '/picture?width=100&height=100';
+			var thumbnailURL = (this.model.FBID === null)? 'assets/images/man.png': 'http://graph.facebook.com/' + this.model.FBID + '/picture?width=70&height=70';
 			self.$el.html(self.template({percentage: percentage, username: staData.username, userId: staData._id, badges: badges, thumbnailURL: thumbnailURL}));
 
 			function calPercentage(value){
