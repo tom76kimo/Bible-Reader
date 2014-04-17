@@ -19,7 +19,8 @@ define([
 			//var this.users;
 			//var usersFinisher = $.Deferred(),
 			var booksFinisher = $.Deferred(),
-			    staDataFinisher = $.Deferred();
+			    staDataFinisher = $.Deferred(),
+			    groupFinisher = $.Deferred();
 			//this.statistic = new Statistic();
 			//this.statistic.calculate(function(users){
 			//	self.users = users;
@@ -39,12 +40,17 @@ define([
 				staDataFinisher.resolve();
 			}, 'json');
 
+			$.get('/groups', {}, function(data){
+				self.groups = data;
+				groupFinisher.resolve();
+			});
+
 			Website.getBooks(function(books){
 				self.books = books;
 				booksFinisher.resolve();
 			});
 
-			$.when(booksFinisher, staDataFinisher).done(function(){
+			$.when(booksFinisher, staDataFinisher, groupFinisher).done(function(){
 				var showReadingButton = 0;
 				if(Website.getUser())
 					showReadingButton = 1;
@@ -57,11 +63,27 @@ define([
 				setTimeout(function(){
 					for(var i=0; i<self.staData.length; ++i){
 						var tr = $('<tr>').appendTo('#panel');
-						new StatisticPersonView({el: tr, model: self.staData[i], books: self.books}).render();
+						var groupName;
+						if(self.staData[i].group) {
+							groupName = getGroupName(self.staData[i].group);
+						}
+						else
+							groupName = null;
+						new StatisticPersonView({el: tr, model: self.staData[i], books: self.books, groupName: groupName}).render();
 					}
 					self.$('.panel-group').addClass('animated fadeInDown');
 				}, 0);
-			});	
+			});
+
+			function getGroupName (groupId) {
+				if(groupId === null || groupId === undefined)
+					return null;
+				for (var i=0; i<self.groups.length; ++i) {
+					if (self.groups[i]._id === groupId)
+						return self.groups[i].name;
+				}
+				return null;
+			}
 		}
 	});
 });

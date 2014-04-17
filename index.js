@@ -515,9 +515,12 @@ function calculates(userId, callback){
 					output.FBID = null;
 				else
 				    output.FBID = profile.FBID;
+
+				output.group = profile.group;
 			}
 			else{
 				output.FBID = null;
+				output.group = null;
 			}
 			
 			callback && callback(output);
