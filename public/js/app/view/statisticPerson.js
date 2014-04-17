@@ -31,9 +31,13 @@ define([
 			}
 
 			function getBookName(bookId){
+				var badge = {};
 				for(var i=0; i<self.books.length; ++i){
-					if(self.books.models[i].id === bookId)
-						return self.books.models[i].get('cname');
+					if(self.books.models[i].id === bookId) {
+						badge.name = self.books.models[i].get('cname');
+						badge.order = self.books.models[i].get('order');
+						return badge;
+					}
 				}
 			}
 
@@ -44,6 +48,9 @@ define([
 				for(var i=0; i<badges.length; ++i){
 					badgesName.push(getBookName(badges[i]));
 				}
+				badgesName = _.sortBy(badgesName, function(element){
+					return element.order;
+				});
 				return badgesName;
 			}
 		}
