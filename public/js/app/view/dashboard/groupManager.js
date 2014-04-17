@@ -2,10 +2,11 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'alertify.min',
 	'model/group',
 	'view/mainMessage',
 	'text!tpl/dashboard/groupManager.html'
-], function($, _, Backbone, Group, MainMessageView, tpl){
+], function($, _, Backbone, alertify, Group, MainMessageView, tpl){
 	return Backbone.View.extend({
 		template: _.template(tpl),
 		render: function(){
@@ -23,10 +24,12 @@ define([
 			var group = new Group();
 			group.save({name: name, amount: 0, net: net, pastor: pastor}, {
 				success: function(model){
-					new MainMessageView().success().render('Insert successfully');
+					//new MainMessageView().success().render('Insert successfully');
+					alertify.success('輸入成功');
 				},
 				error: function(){
-					new MainMessageView().danger().render('Insert failed');
+					//new MainMessageView().danger().render('Insert failed');
+					alertify.error('輸入失敗');
 				}
 			});
 		}
