@@ -3,12 +3,13 @@ define([
 	'underscore',
 	'backbone',
 	'bootstrap',
+	'alertify.min',
 	'view/mainMessage',
 	'text!tpl/login.html',
 	'text!tpl/logged.html',
 	'model/user',
 	'model/website'
-], function($, _, Backbone, bootstrap, MainMessage, tpl, loggedTpl, User, Website){
+], function($, _, Backbone, bootstrap, alertify, MainMessage, tpl, loggedTpl, User, Website){
 	return Backbone.View.extend({
 		el: $('#login'),
 		initialize: function(){
@@ -103,7 +104,8 @@ define([
 			    password = this.$('#password').val();
 
 			if(userId === '' || password === ''){
-				this.mainMessage.warning().render(_LAN_BLANK_ID_PASSWORD);
+				//this.mainMessage.warning().render(_LAN_BLANK_ID_PASSWORD);
+				alertify.error(_LAN_BLANK_ID_PASSWORD);
 				return;
 			}
 			var self = this;
@@ -111,7 +113,8 @@ define([
 				if(data.status === 1)
 					hasLogged(data.id);
 				else{
-					self.mainMessage.danger().render(_LAN_CHECK_ID_PASSWORD_CORRECTNESS);
+					//self.mainMessage.danger().render(_LAN_CHECK_ID_PASSWORD_CORRECTNESS);
+					alertify.error(_LAN_CHECK_ID_PASSWORD_CORRECTNESS);
 				}
 			}, 'json');
 
@@ -122,7 +125,8 @@ define([
 						Website.setUser(model);
 						var nickname = model.get('nickname') || model.get('username');
 						self.loggedRender(nickname);
-						self.mainMessage.success().render('<strong>Hello!! ' + nickname + '</strong>，' + _LAN_LOGIN_SUCCESS + '!!!');
+						//self.mainMessage.success().render('<strong>Hello!! ' + nickname + '</strong>，' + _LAN_LOGIN_SUCCESS + '!!!');
+						alertify.success('哈囉！ ' + nickname + ' ' + _LAN_LOGIN_SUCCESS + '！');
 					}
 				});
 			}
@@ -133,7 +137,8 @@ define([
 			$.post('/logout', {}, function(){
 				Website.clearUser();
 				self.loggoutRender();
-				self.mainMessage.warning().render(_LAN_LOGOUT_SUCCESS);
+				//self.mainMessage.warning().render(_LAN_LOGOUT_SUCCESS);
+				alertify.success(_LAN_LOGOUT_SUCCESS);
 				Website.navigate('/', {trigger: true, replace: true});
 			});
 		}

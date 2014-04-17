@@ -2,6 +2,7 @@ define([
 	'jquery',
 	'underscore',
 	'backbone',
+	'alertify.min',
 	'model/website',
 	'model/profile',
 	'model/settingProfile',
@@ -11,7 +12,7 @@ define([
 	'collection/hasReads',
 	'collection/groups',
 	'text!tpl/setting.html'
-], function($, _, Backbone, Website, Profile, SettingProfile, MainMessageView, SettingAddrView, Books, HasReads, Groups, tpl){
+], function($, _, Backbone, alertify, Website, Profile, SettingProfile, MainMessageView, SettingAddrView, Books, HasReads, Groups, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -116,7 +117,8 @@ define([
 					$(this).addClass('animate fadeInDown');
 				});
 				self.$('#thumbnailPhoto').on('error', function(){
-					new MainMessageView().warning().render('無法以您檔案裡的Facebook ID正確抓取圖片');
+					//new MainMessageView().warning().render('無法以您檔案裡的Facebook ID正確抓取圖片');
+					alertify.error('無法以您檔案裡的Facebook ID正確抓取圖片');
 					$(this).attr('src', 'assets/images/man.png');
 				});
 				var group = sPro.get('group');
@@ -202,12 +204,14 @@ define([
 					self.$('#loadingGif').hide();
 					self.$('#myModal').modal('hide');
 					self.addressView.render();
-					new MainMessageView().success().render('Profile Save Success');
+					//new MainMessageView().success().render('Profile Save Success');
+					alertify.success('個人檔案儲存成功！');
 				},
 				error: function(model, response, options){
 					self.$('#loadingGif').hide();
 					self.$('#myModal').modal('hide');
-					new MainMessageView().warning().render('Profile Save Failed');
+					//new MainMessageView().warning().render('Profile Save Failed');
+					alertify.error('嗚喔，個人檔案儲存失敗！');
 				}
 			});
 		},
@@ -216,12 +220,14 @@ define([
 			var profile = new Profile({userId: this.user.id});
 			profile.save({FBID: id}, {
 				success: function(){
-					new MainMessageView().success().render('FB ID儲存成功。');
+					//new MainMessageView().success().render('FB ID儲存成功。');
+					alertify.success('FB ID儲存成功。');
 					self.$('#thumbnailModal').modal('hide');
 					self.$('#thumbnailPhoto').attr('src', 'http://graph.facebook.com/' + id + '/picture?width=140&height=140');
 				},
 				error: function(){
-					new MainMessageView().warning().render('嗚，似乎哪裡出了問題。');
+					//new MainMessageView().warning().render('嗚，似乎哪裡出了問題。');
+					alertify.error('嗚，似乎哪裡出了問題。');
 					self.$('#thumbnailModal').modal('hide');
 				}
 			});

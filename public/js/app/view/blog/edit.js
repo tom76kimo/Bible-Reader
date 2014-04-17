@@ -5,11 +5,12 @@ define([
 	'markdown',
 	'to-markdown',
 	'bootstrap-markdown',
+	'alertify.min',
 	'model/article',
 	'model/website',
 	'view/mainMessage',
 	'text!tpl/blog/edit.html'
-], function($, _, Backbone, Markdown, to_Markdown, BootstrapMarkdown, Article, website, MainMessageView, tpl){
+], function($, _, Backbone, Markdown, to_Markdown, BootstrapMarkdown, alertify, Article, website, MainMessageView, tpl){
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
@@ -34,7 +35,8 @@ define([
 
 			$.when(articleFinisher, userFinisher).done(function(){
 				if(self.me.id !== self.article.get('userId')){
-					self.message.danger().render('抱歉，您沒有編輯這篇文章的權限。');
+					//self.message.danger().render('抱歉，您沒有編輯這篇文章的權限。');
+					alertify.error('抱歉，您沒有編輯這篇文章的權限。');
 					website.navigate('#blog/main', {trigger: true});
 				}
 				self.$el.html(self.template);
@@ -47,11 +49,13 @@ define([
 
 						self.article.save({title: title, content: e.getContent(), lastUpdate: nowTime, writeTime: nowTime, userId: user.id}, {
 							success: function(article){
-								self.message.success().render('文章編輯成功。');
+								//self.message.success().render('文章編輯成功。');
+								alertify.success('文章編輯成功。');
 								website.navigate('blog/article/' + article.id, {trigger: true, replace: true});
 							},
 							error: function(data){
 								self.message.danger().render('嗚，似乎哪裡出現了問題。');
+								alertify.error('嗚，似乎哪裡出現了問題。');
 								console.log(data);
 							}
 						});

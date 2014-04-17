@@ -28,6 +28,10 @@ requirejs.config({
 	  'to-markdown': {},
 	  'bootstrap-markdown': {
 	  	deps: ['jquery', 'bootstrap']
+	  },
+	  'alertify.min': {
+	  	deps: ['jquery', 'bootstrap'],
+	  	exports: 'alertify'
 	  }
 	}
 });

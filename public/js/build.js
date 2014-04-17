@@ -22,6 +22,10 @@
 	  'backbone': {
 	  	deps: ['jquery', 'underscore'],
 	  	exports: 'Backbone'
+	  },
+	  'alertify.min': {
+	  	deps: ['jquery', 'bootstrap'],
+	  	exports: 'alertify'
 	  }
 	},
 	optimizeCss: "standard",
