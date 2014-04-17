@@ -23,7 +23,7 @@
 	</div>
 	<div style="clear: both"></div>
 		
-	<div style="width: 100%;">Progress: <strong><%=percentage%>%</strong></div>
+	<div style="width: 100%;">進度: <strong><%=percentage%>%</strong></div>
 	<div class="progress" style="width: 100%;">
 		<div class="progress-bar" role="progressbar" aria-valuenow="<%=percentage%>" aria-valuemin="0" aria-valuemax="100" style="width: <%=percentage%>%;">
 		<%=percentage%>%
@@ -31,7 +31,7 @@
 	</div>
 	
 	<div style="clear: both"></div>
-	<strong>Badges:</strong>
+	<strong>獎章:</strong>
 	<div style="width: 100%; ">
 		<% for(var i=0; i<badges.length; ++i){ %>
 			<span class="badge"><%=badges[i]%></span>
@@ -52,19 +52,19 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h4 class="modal-title" id="myModalLabel">Edit your profile</h4>
+                 <h4 class="modal-title" id="myModalLabel">編輯你的個人檔案</h4>
 
             </div>
             <div class="modal-body">
                 <form class="form-horizontal" role="form">
                     <div class="form-group">
-                        <label for="group" class="col-sm-2 col-xs-4 control-label">Group</label>
+                        <label for="group" class="col-sm-2 col-xs-4 control-label">小組</label>
                         <div class="col-sm-8 col-xs-12">
                             <select class="form-control" id="group"></select>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label for="nickname" class="col-sm-2 col-xs-4 control-label">Nickname</label>
+                        <label for="nickname" class="col-sm-2 col-xs-4 control-label">暱稱</label>
                         <div class="col-sm-8 col-xs-12">
                             <input type="text" class="form-control" id="nickname" placeholder="Nickname" value="<%-profile.nickname%>">
                         </div>
@@ -77,7 +77,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label for="description" class="col-sm-2 control-label">Description</label>
+                        <label for="description" class="col-sm-2 control-label">描述</label>
                         <div class="col-sm-8">
                             <textarea class="form-control" id="description" placeholder="Description"><%-profile.description%></textarea>
                         </div>
@@ -87,8 +87,8 @@
             <div class="modal-footer">
                 
                     <img id="loadingGif" width="20" height="20" src="assets/images/loading.gif" style="margin-right: 3px; display: none;"/>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveBtn" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                    <button id="saveBtn" type="button" class="btn btn-primary">儲存變更</button>
                 
             </div>
         </div>
@@ -101,7 +101,7 @@
         <div class="modal-content">
             <div class="modal-header">
                 <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                 <h4 class="modal-title" id="myModalLabel1">Enter your Facebook ID</h4>
+                 <h4 class="modal-title" id="myModalLabel1">輸入你的Facebook ID</h4>
 
             </div>
             <div class="modal-body">
@@ -117,8 +117,8 @@
             <div class="modal-footer">
                 
                     <img id="loadingGif" width="20" height="20" src="assets/images/loading.gif" style="margin-right: 3px; display: none;"/>
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                    <button id="saveFbBtn" type="button" class="btn btn-primary">Save changes</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">關閉</button>
+                    <button id="saveFbBtn" type="button" class="btn btn-primary">儲存變更</button>
                 
             </div>
         </div>
