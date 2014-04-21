@@ -10,6 +10,7 @@ define([
 	'view/setting',
 	'view/read',
 	'view/statistic',
+	'view/statisticAllNet',
 	'view/blog/main',
 	'view/blog/new',
 	'view/blog/article',
@@ -18,7 +19,7 @@ define([
 	'view/profile',
 	'view/achievement',
 	'model/website'
-], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, BlogView, BlogNewView, BlogArticleView, BlogEditView, DashBoardView, ProfileView, AchievementView, Website){
+], function($, _, Backbone, User, Statistic, MainView, LoginView, SignUpView, SettingView, ReadView, StatisticView, StatisticAllNetView, BlogView, BlogNewView, BlogArticleView, BlogEditView, DashBoardView, ProfileView, AchievementView, Website){
 	return Backbone.Router.extend({
 		initialize: function(){
 			new LoginView();
@@ -61,7 +62,8 @@ define([
 			'success': 'success',
 			'setting': 'setting',
 			'read': 'read',
-			'statics': 'statics',
+			'statistics': 'statics',
+			'statistics/:netId': 'staticsByNet',
 			'blog/main': 'blog',
 			'blog/article/:id': 'showArticle',
 			'blog/new': 'blogNew',
@@ -102,7 +104,14 @@ define([
 			});
 		},
 		statics: function(){
-			new StatisticView().render();
+			new StatisticAllNetView().render();
+		},
+		staticsByNet: function(netId){
+			if (netId === 'all') {
+				new StatisticView().render();
+			} else {
+				new StatisticNetView().render();
+			}
 		},
 		blog: function(){
 			new BlogView().render();

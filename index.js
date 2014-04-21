@@ -346,7 +346,7 @@ app.post('/login', function(req, res, next){
 	      if (err) { return next(err); }
 	      return res.json({status: 1, id: user._id});
 	    });
-	  })(req, res, next);
+	})(req, res, next);
 });
 
 app.post('/signUp', function(req, res, next){
@@ -482,6 +482,29 @@ app.post('/progress', function(req, res){
 	});
 });
 
+app.get('/groupStatistic', function(req, res) {
+	var result = [];
+	Group.find({}, function (err, groups) {
+		var userFinisher = [];
+		for (var i=0; i<groups.length; ++i) {
+			(function(index){
+				var group = groups[index];
+				var promise = new Promise(function (resolve, reject) {
+					Profile.find({group: group._id}, function (err, profiles) {
+						var groupData = {id: group._id, name: group.name, amount: profiles.length};
+						result.push(groupData);
+						resolve();
+					});
+				});
+				userFinisher.push(promise);
+			}(i));
+		}
+		Promise.all(userFinisher).then(function () {
+			res.send(200, result);
+		});
+	});
+});
+
 
 
 
@@ -525,6 +548,17 @@ function calculates(userId, callback){
 			
 			callback && callback(output);
 		});
+	});
+}
+
+function calProgress (userId, callback) {
+	var output = {};
+	output.totalReadChapter = 0;
+	HasRead.find({userId: userId}, function(err, hasReads){
+		for(var i=0; i<hasReads.length; ++i){
+			output.totalReadChapter += hasReads[i].amount;
+		}
+		callback && callback(output);
 	});
 }
 

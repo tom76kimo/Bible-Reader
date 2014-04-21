@@ -123,3 +123,37 @@
 .thumbnailCog:hover {
 	border: 1px solid #555;
 }
+
+.card {
+	float: left;
+	cursor: pointer;
+    width: 200px;
+    height: 260px;
+    background: #fff;
+    margin: 10px;
+    border-radius: 10px 10px 10px 10px;
+    -moz-border-radius: 10px 10px 10px 10px;
+    -webkit-border-radius: 10px 10px 10px 10px;
+    border: 0px solid #000000;
+    -webkit-box-shadow: 0 1px 2px #AAA;
+    -moz-box-shadow: 0 1px 2px #AAA;
+    box-shadow: 0 1px 2px #AAA;
+    -webkit-transition : box-shadow 500ms ease;
+    -moz-transition : box-shadow 500ms ease;
+    -o-transition : box-shadow 500ms ease;
+}
+.card:hover {
+    box-shadow: 2px 4px 5px #adcadc;
+}
+.card-title {
+    position: relative;
+    padding: 5px;
+    font-size: 25px;
+}
+.card-body {
+    padding: 5px;
+}
+
+.card-progress {
+    
+}
