@@ -20,13 +20,24 @@ var _ = require('underscore');
 //==== Utility
 Array.prototype.isContain = function(resource){
 	var result = true;
-	for(var i=0; i<resource.length; ++i){
+	if (!_.isArray(resource)) {
+		//source is not an Array
 		var found = false;
 		for(var j=0; j<this.length; ++j){
-			if(resource[i].toString() === this[j].toString())
+			if(resource.toString() === this[j].toString())
 				found = true;
 		}
 		result &= found;
+	} else {
+		//source is an Array
+		for(var i=0; i<resource.length; ++i){
+			var found = false;
+			for(var j=0; j<this.length; ++j){
+				if(resource[i].toString() === this[j].toString())
+					found = true;
+			}
+			result &= found;
+		}		
 	}
 	return !!result;
 }
@@ -418,9 +429,8 @@ app.get('/statistic', function(req, res){
 	});
 });
 
-var statisticDataPromises = [];
 app.get('/statisticData', function(req, res){
-	statisticDataPromises = [];
+	var statisticDataPromises = [];
 	User.find({}, function(err, user){
 		for(var i=0; i<user.length; ++i){
 			(function(i){
@@ -440,6 +450,80 @@ app.get('/statisticData', function(req, res){
 		});
     	
 	});
+});
+
+app.get('/statisticData/:id', function(req, res){
+	var statisticDataPromises = [];
+	var netName = req.params.id;
+	/*
+	User.find({}, function(err, user){
+		for(var i=0; i<user.length; ++i){
+			(function(i){
+				user[i].password = null
+				var promise = new Promise(function(resolve, reject){
+					calculates(user[i]._id, function(output){
+						var outputObj = {username: user[i].username, _id: user[i]._id};
+						outputObj = _.extend(outputObj, output);
+						resolve(outputObj);
+					});
+				});
+				statisticDataPromises.push(promise);
+			})(i);
+		}
+		Promise.all(statisticDataPromises).then(function(result){
+			res.send(result);
+		});
+    	
+	});*/
+	Group.find({net: netName}, function (err, groups) {
+		var groupIDs = getGroupIDs(groups, netName);
+		getProfiles(groupIDs, function (users) {
+			for(var i=0; i<users.length; ++i){
+				(function(i){
+					var promise = new Promise(function(resolve, reject){
+						calculates(users[i], function(output){
+							var username;
+							getNameById(users[i], function (username) {
+								var outputObj = {username: username, _id: users[i]};
+								outputObj = _.extend(outputObj, output);
+								resolve(outputObj);
+							});
+						});
+					});
+					statisticDataPromises.push(promise);
+				})(i);
+			}
+			Promise.all(statisticDataPromises).then(function(result){
+				res.send(result);
+			});
+		});
+	});
+
+	function getNameById(id, callback) {
+		User.findById(id, function(err, user) {
+			callback && callback(user.username);
+		});
+	}
+	function getProfiles (groupIDs, callback) {
+		var users = [];
+		var taskFinisher = [];
+		for (var i=0; i<groupIDs.length; ++i) {
+			(function (index) {
+				var promise = new Promise(function (resolve, reject) {
+					Profile.find({group: groupIDs[index]}, function (err, profiles) {
+						for (var j=0; j<profiles.length; ++j) {
+							users.push(profiles[j].userId);
+						}
+						resolve();
+					});					
+				});
+				taskFinisher.push(promise);
+			}(i));
+		}
+		Promise.all(taskFinisher).then(function () {
+			callback && callback(users);
+		});
+	}
 });
 
 app.get('/allUser', function(req, res){
@@ -505,16 +589,73 @@ app.get('/groupStatistic', function(req, res) {
 	});
 });
 
-
-
-
-/*
-calculates("531682ed21498354179a1d39", function(data){
-	calAchievement(data.badges, function(result){
-		console.log(result);
+app.get('/netStatistic', function(req, res){
+	Group.find({}, function (err, groups) {
+		var nets = getNets(groups);
+		var taskFinisher = [];
+		var result = [];
+		for (var i=0; i<nets.length; ++i) {
+			(function (index) {
+				var promise = new Promise(function (resolve, reject) {
+					var groupIDs = getGroupIDs(groups, nets[index]);
+					getAmountByNet(groupIDs, function (amount) {
+						result.push({
+							name: nets[index],
+							amount: amount
+						});
+						resolve();
+					});
+				});
+				taskFinisher.push(promise);
+			}(i));
+		}
+		Promise.all(taskFinisher).then(function () {
+			res.send(200, result);
+		});
 	});
-}); */
 
+	function getAmountByNet (groupIDs, callback) {
+		var taskFinisher = [];
+		var amount = 0;
+		for (var i=0; i<groupIDs.length; ++i) {
+			(function(index){
+				var promise = new Promise(function (resolve, reject) {				
+					Profile.find({group: groupIDs[index]}, function (err, users) {
+						amount += users.length;
+						resolve();
+					});
+				});
+				taskFinisher.push(promise);
+			}(i));
+		}
+		Promise.all(taskFinisher).then(function () {
+			callback && callback(amount);
+		});
+	}
+
+	
+
+	function getNets (groups) {
+		var nets = [];
+		for (var i=0; i<groups.length; ++i) {
+			var source = groups[i].net;
+			if (!nets.isContain(source)) {
+				nets.push(source);
+			}
+		}
+		return nets;
+	}
+});
+
+function getGroupIDs (groups, netName) {
+	var ids = [];
+	for (var i=0; i<groups.length; ++i) {
+		if (netName.toString() === groups[i].net.toString()) {
+			ids.push(groups[i]._id);
+		}
+	}
+	return ids;
+}
 
 function calculates(userId, callback){
 	//console.log(userId);

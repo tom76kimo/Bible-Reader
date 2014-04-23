@@ -14,7 +14,7 @@ define([
 	return Backbone.View.extend({
 		el: $('#main'),
 		template: _.template(tpl),
-		render: function(){
+		render: function(netName){
 			var self = this;
 			//var this.users;
 			//var usersFinisher = $.Deferred(),
@@ -32,8 +32,13 @@ define([
 				self.users = users;
 				usersFinisher.resolve();
 			});*/
-
-			$.get('/statisticData', {}, function(data){
+			var statisticPath;
+			if (netName) {
+				statisticPath = '/statisticData/' + netName;
+			} else {
+				statisticPath = '/statisticData';
+			}
+			$.get(statisticPath, {}, function(data){
 				self.staData = _.sortBy(data, function(obj){
 					return obj.totalReadChapter * -1;
 				});

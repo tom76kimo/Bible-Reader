@@ -128,7 +128,7 @@
 	float: left;
 	cursor: pointer;
     width: 200px;
-    height: 260px;
+    height: 160px;
     background: #fff;
     margin: 10px;
     border-radius: 10px 10px 10px 10px;
@@ -146,11 +146,14 @@
     box-shadow: 2px 4px 5px #adcadc;
 }
 .card-title {
+	margin-top: 30px;
+	text-align: center;
     position: relative;
     padding: 5px;
     font-size: 25px;
 }
 .card-body {
+	text-align: center;
     padding: 5px;
 }
 

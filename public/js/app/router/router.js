@@ -70,7 +70,8 @@ define([
 			'blog/edit/:id': 'blogEdit',
 			'dashboard': 'dashboard',
 			'profile/:id': 'profile',
-			'achievement': 'achievement'
+			'achievement': 'achievement',
+			'test': 'test'
 		},
 		welcome: function(){
 			new MainView().render();
@@ -110,7 +111,8 @@ define([
 			if (netId === 'all') {
 				new StatisticView().render();
 			} else {
-				new StatisticNetView().render();
+				console.log(netId);
+				new StatisticView().render(netId);
 			}
 		},
 		blog: function(){
@@ -141,6 +143,11 @@ define([
 			this.checkAuth(function(){
 				new AchievementView().render();
 			});
+		},
+		test: function () {
+			$.get('/statisticData/Tom', function(data){
+				console.log(data);
+			}, 'json');
 		}
 	});
 });
