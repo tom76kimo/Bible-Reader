@@ -501,7 +501,11 @@ app.get('/statisticData/:id', function(req, res){
 
 	function getNameById(id, callback) {
 		User.findById(id, function(err, user) {
-			callback && callback(user.username);
+			if (user) {
+				callback && callback(user.username);
+			} else {
+				callback && callback(null);
+			}
 		});
 	}
 	function getProfiles (groupIDs, callback) {
@@ -512,6 +516,9 @@ app.get('/statisticData/:id', function(req, res){
 				var promise = new Promise(function (resolve, reject) {
 					Profile.find({group: groupIDs[index]}, function (err, profiles) {
 						for (var j=0; j<profiles.length; ++j) {
+							if (profiles[j].userId === '5336e99f572f7cd159d56bf0') {
+								console.log(profiles[j]);
+							}
 							users.push(profiles[j].userId);
 						}
 						resolve();
