@@ -22,7 +22,9 @@ define([
                     new CardEntry({el: div, data: data[i]}).render();
                     (function (target, index) {
                         target.click(function (e) {
-                            website.navigate('#statistics/' + data[index].name, {trigger: true});
+                            website.navigate('statistics/' + encodeURIComponent(data[index].name), {trigger: true});
+                            //Backbone.history.fragment = '#statistics/' + data[index].name;
+                            //window.location.href = '#statistics/' + data[index].name;
                         });
                     }(div, i));
                 }

@@ -111,7 +111,6 @@ define([
 			if (netId === 'all') {
 				new StatisticView().render();
 			} else {
-				console.log(netId);
 				new StatisticView().render(netId);
 			}
 		},
