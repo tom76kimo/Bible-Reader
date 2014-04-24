@@ -26,6 +26,9 @@ define([
 			var thumbnailURL = (this.model.FBID === null)? 'assets/images/man.png': 'http://graph.facebook.com/' + this.model.FBID + '/picture?width=70&height=70';
 			self.$el.html(self.template({percentage: percentage, username: staData.username, userId: staData._id, badges: badges, thumbnailURL: thumbnailURL, groupName: this.groupName}));
 
+			self.$('.thumbnail').on('error', function () {
+				$(this).attr('src', 'assets/images/man.png');
+			});
 			function calPercentage(value){
 				var percentage = Math.floor((value / 1189) * 10000);
 				return (percentage / 100);
