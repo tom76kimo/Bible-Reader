@@ -43,14 +43,18 @@ define([
 						return badge;
 					}
 				}
+				return false;
 			}
 
 			function getBadgesName(badges){
 				var badgesName = [];
-				if(!badges)
+				if(!badges || badges.length === 0)
 					return badgesName;
 				for(var i=0; i<badges.length; ++i){
-					badgesName.push(getBookName(badges[i]));
+					var bookName = getBookName(badges[i]);
+					if (bookName) {
+						badgesName.push(getBookName(badges[i]));
+					}
 				}
 				badgesName = _.sortBy(badgesName, function(element){
 					return element.order;

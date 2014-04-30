@@ -32,6 +32,9 @@ define([
 
 			$.when(bookFinished, hasReadFinished).done(function(){
 				self.$el.html(self.template());
+				self.books.models = _.sortBy(self.books.models, function(element) {
+					return parseInt(element.get('order'));
+				});
 				for(var i=0; i<self.books.length; ++i){
 					var div;
 					if(i<39)
