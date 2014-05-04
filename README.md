@@ -10,7 +10,7 @@ User can easily use this website framework to build your own record web app for 
  - ```Achievement System```: unlock achievements when satisfy certain conditions.
  - ```Blog System```: you can share your review or comment through this system. 
 
-## Build Skills:
+## Build Tech:
 ### Front-end:
  - ```Backbone.js``` 
  - ```Bootstrap```
