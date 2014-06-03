@@ -677,6 +677,7 @@ function calculates(userId, callback){
             if(hasReads[i].amount === hasReads[i].totalAmount)
                 output.badges.push(hasReads[i].bookId);
         }
+        output.badges = _.uniq(output.badges);
         Profile.find({userId: userId}, function(err, profile){
             if(err){
                 output.FBID = null;
