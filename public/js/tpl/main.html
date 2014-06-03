@@ -18,15 +18,20 @@
       <p>這裡收集了大家的讀經收穫</p>
       <p><a class="btn btn-default" href="#blog/main" role="button">點我觀看 &raquo;</a></p>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <h2>獎章系統</h2>
       <p>當你讀完某一卷書，就會得到那卷書的獎章作為獎勵。</p>
       <!--p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p-->
    </div>
-    <div class="col-md-4">
+    <div class="col-md-3">
       <h2>成就系統</h2>
       <p>當你達成某些條件，就會解開成就。</p>
       <!--p><a class="btn btn-default" href="#" role="button">View details &raquo;</a></p-->
+    </div>
+    <div class="col-md-2">
+      <h2><span class="glyphicon glyphicon-list-alt"></span> 近期更新</h2>
+      <p>紀錄網站開發及更新狀況</p>
+      <p><button id="updatesLogButton" class="btn btn-default" data-toggle="modal" data-target="#updatesLog">點我觀看 &raquo;</button></p>
     </div>
   </div>
 
@@ -36,3 +41,19 @@
     <p><a href="https://github.com/tom76kimo" target="_blank">tom76kimo</a>&copy; 2014 all rights reserved</p>
   </footer>
 </div> <!-- /container -->
+
+<div id="updatesLog" class="modal fade" data-backdrop="static">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title">近期更新</h4>
+      </div>
+      <div id="logBody" class="modal-body">
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->
