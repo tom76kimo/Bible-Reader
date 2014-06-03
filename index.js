@@ -43,14 +43,22 @@ Array.prototype.isContain = function(resource){
 }
 
 
-
+/*
 var fs = require('fs');
 
 var options = {
-  key: fs.readFileSync('privatekey.pem'),
-  cert: fs.readFileSync('certificate.pem')
+  key: fs.readFileSync('server-key.pem'),
+  cert: fs.readFileSync('server-cert.pem')
 };
+*/
 
+//new HasRead({userId: '1', bookId: '1', readChapter: '1,2'}).save();
+/*
+HasRead.findOne({userId: '1', bookId: '1'}, function(err, hasRead){
+    if(err) console.log('failed');
+    if(!hasRead)
+        console.log('document not found');
+});*/
 
 function validPassword(user, password){
     if(user.password !== password)
@@ -74,6 +82,12 @@ passport.use(new LocalStrategy(
             }
             return done(null, user);
         });
+        /*
+        if('Tom' === username && '123456' === password){
+            return done(null, {name: 'Tom'});
+        }
+        else
+            return done(null, false, '{}');*/
     }
 ));
 
@@ -132,13 +146,13 @@ app.get('/hasreads', function(req, res){
     HasRead.find({userId: req.user._id}, function(err, hasRead){
         res.setHeader('Last-Modified', (new Date()).toUTCString());
         res.setHeader('cache-control', 'private, max-age=0, no-cache');
+        //console.log(hasRead);
         res.send(200, hasRead);
     });
     
 });
 
 app.all('*', function(req, res, next){
-    //for security considering, remove the x-power-by frame
     res.removeHeader('x-power-by');
     next();
 });
@@ -171,6 +185,7 @@ app.put('/hasread', function(req, res){
             console.log(err);
         res.send(200, {_id: req.body._id});
     });
+    //res.send(200);
 });
 
 app.post('/article', function(req, res){
@@ -440,12 +455,32 @@ app.get('/statisticData', function(req, res){
 app.get('/statisticData/:id', function(req, res){
     var statisticDataPromises = [];
     var netName = req.params.id;
+    /*
+    User.find({}, function(err, user){
+        for(var i=0; i<user.length; ++i){
+            (function(i){
+                user[i].password = null
+                var promise = new Promise(function(resolve, reject){
+                    calculates(user[i]._id, function(output){
+                        var outputObj = {username: user[i].username, _id: user[i]._id};
+                        outputObj = _.extend(outputObj, output);
+                        resolve(outputObj);
+                    });
+                });
+                statisticDataPromises.push(promise);
+            })(i);
+        }
+        Promise.all(statisticDataPromises).then(function(result){
+            res.send(result);
+        });
+        
+    });*/
     Group.find({net: netName}, function (err, groups) {
         var groupIDs = getGroupIDs(groups, netName);
         getProfiles(groupIDs, function (users) {
             for(var i=0; i<users.length; ++i){
                 (function(i){
-                    var promiseExec = function (resolve, reject) {
+                    var promise = new Promise(function(resolve, reject){
                         calculates(users[i], function(output){
                             var username;
                             getNameById(users[i], function (username) {
@@ -454,8 +489,7 @@ app.get('/statisticData/:id', function(req, res){
                                 resolve(outputObj);
                             });
                         });
-                    };
-                    var promise = new Promise(promiseExec);
+                    });
                     statisticDataPromises.push(promise);
                 })(i);
             }
@@ -470,25 +504,28 @@ app.get('/statisticData/:id', function(req, res){
             if (user) {
                 callback && callback(user.username);
             } else {
+
+                console.log(id);
                 callback && callback(null);
             }
         });
     }
-
     function getProfiles (groupIDs, callback) {
         var users = [];
         var taskFinisher = [];
         for (var i=0; i<groupIDs.length; ++i) {
             (function (index) {
-                var exec = function (resolve, reject) {
+                var promise = new Promise(function (resolve, reject) {
                     Profile.find({group: groupIDs[index]}, function (err, profiles) {
                         for (var j=0; j<profiles.length; ++j) {
+                            if (profiles[j].userId === '5336e99f572f7cd159d56bf0') {
+                                console.log(profiles[j]);
+                            }
                             users.push(profiles[j].userId);
                         }
                         resolve();
-                    });
-                };
-                var promise = new Promise(exec);
+                    });                 
+                });
                 taskFinisher.push(promise);
             }(i));
         }
@@ -545,14 +582,13 @@ app.get('/groupStatistic', function(req, res) {
         for (var i=0; i<groups.length; ++i) {
             (function(index){
                 var group = groups[index];
-                var promiseExec = function (resolve, reject) {
+                var promise = new Promise(function (resolve, reject) {
                     Profile.find({group: group._id}, function (err, profiles) {
                         var groupData = {id: group._id, name: group.name, amount: profiles.length};
                         result.push(groupData);
                         resolve();
-                    }); 
-                };
-                var promise = new Promise(promiseExec);
+                    });
+                });
                 userFinisher.push(promise);
             }(i));
         }
@@ -749,6 +785,6 @@ function ensureAuthenticated(req, res, next) {
   res.redirect('/login')
 }
 
-//app.listen(9797);
+app.listen(1337);
 
-https.createServer(options, app).listen(9797);
+//https.createServer(options, app).listen(9798);
