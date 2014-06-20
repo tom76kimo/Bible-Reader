@@ -56,7 +56,7 @@ define([
 
 		addAchievements: function () {
 			var self = this;
-			$.get('/userAchievements', {}, function (data) {
+			$.get('/userAchievements/' + this.userId, {}, function (data) {
 				for (var i=0; i<data.length; ++i) {
 					self.$('#achievementsList').append('<span class="badge" style="background-color: #FC53A8; margin: 5px;">'+data[i]+'</span>');
 				}

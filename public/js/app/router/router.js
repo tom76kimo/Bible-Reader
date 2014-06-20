@@ -136,9 +136,7 @@ define([
 			});
 		},
 		profile: function(id){
-			this.checkAuth(function(){
-				new ProfileView({userId: id}).render();
-			});
+			new ProfileView({userId: id}).render();
 		},
 		achievement: function(){
 			this.checkAuth(function(){

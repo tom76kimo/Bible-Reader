@@ -565,6 +565,14 @@ app.get('/userAchievements', function(req, res){
         
 });
 
+app.get('/userAchievements/:id', function(req, res){
+    calculates(req.params.id, function(data){
+        calAchievement(data, function(result){
+            res.send(200, result);
+        });
+    });
+});
+
 app.get('/account', ensureAuthenticated, function(req, res){
   res.send({ user: req.user });
 });
