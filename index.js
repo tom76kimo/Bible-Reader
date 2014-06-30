@@ -699,10 +699,12 @@ function calculates(userId, callback){
                     output.FBID = profile.FBID;
 
                 output.group = profile.group;
+                output.readTimes = profile.readTimes || 1;
             }
             else{
                 output.FBID = null;
                 output.group = null;
+                output.readTimes = 0;
             }
             
             callback && callback(output);
