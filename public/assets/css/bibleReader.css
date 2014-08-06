@@ -160,3 +160,9 @@
 .card-progress {
     
 }
+
+.hasFinished {
+	float: right;
+	margin-right: 5px;
+	display: none;
+}

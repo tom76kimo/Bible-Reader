@@ -8,13 +8,14 @@ define([
 		template: _.template(tpl),
 		initialize: function(options){
 			this.hasRead = options.hasRead;
-			//console.log(this.hasRead);
+			this.listenTo(this.hasRead, 'change', this.hasFinished);
 		},
 		render: function(){
 			var self = this;
 			//var readChapterArray = this.getReadChapterArray();
 			this.$el.html(this.template({book: JSON.stringify(this.model)}));
 			this.populateBtnGroup();
+			this.hasFinished();
 
 			this.$('#readAll').tooltip({container: 'body'});
 
@@ -45,6 +46,15 @@ define([
 				//console.log(jQuery.data(label, 'number'));
 			}
 		},
+
+		hasFinished: function () {
+			if (parseInt(this.hasRead.get('amount'), 10) === parseInt(this.hasRead.get('totalAmount'), 10)) {
+				this.$('.hasFinished').css('display', 'inline-block');
+			} else {
+				this.$('.hasFinished').css('display', 'none');
+			}
+		},
+
 		events: {
 			'click label': 'choose',
 			'click #readAll': 'readAll'
