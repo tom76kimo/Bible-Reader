@@ -583,6 +583,30 @@ app.post('/progress', function(req, res){
     });
 });
 
+app.post('/startNewReading', function (req, res) {
+    var userId = req.user._id,
+        readTimes;
+    HasRead.remove({userId: userId}, function (err) {
+        if (err) {
+            res.send(500, {error: 'hasRead removed error'});
+        }
+
+        Profile.findOne({userId: userId}, function (err, doc) {
+            if (err) {
+                res.send(500, {error: 'profile find error'});
+            }
+            console.log(doc);
+            readTimes = doc.readTimes || 1;
+            readTimes ++;
+            Profile.update({userId: userId}, {readTimes: readTimes}, {multi:true}, function(err, numberAffected, raw){
+                if(err)
+                    console.log(err);
+                res.send(200);
+            });
+        });
+    });
+});
+
 app.get('/groupStatistic', function(req, res) {
     var result = [];
     Group.find({}, function (err, groups) {
