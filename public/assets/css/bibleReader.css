@@ -179,4 +179,7 @@
 
 .colorful-blockquote {
     border-left: 5px solid #555;
+    opacity: 1;
+    transition-delay: 2s;
+    transition: opacity 2s;
 }
