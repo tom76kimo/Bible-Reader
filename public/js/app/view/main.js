@@ -27,12 +27,15 @@ define([
             var $banner = $('.colorful-blockquote');
             var index = 0;
             var banner = this.banner;
-            var bannerFadeout = function () {
+            var bannerFadeout = function (bannerChangeTime) {
+                if (!bannerChangeTime) {
+                    bannerChangeTime = BANNER_CHANGE_TIME;
+                }
                 setTimeout(function () {
                     $banner.css({
                         opacity: 0
                     });
-                }, BANNER_CHANGE_TIME);
+                }, bannerChangeTime);
             };
             var transitionendFunc = function () {
                 if ($banner.css('opacity') == 1) {
@@ -48,7 +51,7 @@ define([
             $banner.on('transitionend', function () {
                 transitionendFunc();
             });
-            bannerFadeout();
+            bannerFadeout(2000);
         }
     });
 });
